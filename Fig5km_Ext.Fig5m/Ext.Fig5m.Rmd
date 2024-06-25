@@ -1,0 +1,360 @@
+---
+title: "Extend figure"
+output: html_notebook
+---
+
+#Fig5k
+```{r}
+# 加载必要的库
+suppressPackageStartupMessages(library(clusterProfiler))
+library(tidyverse)
+library(ggplot2)
+library(RColorBrewer)
+library(readxl)
+
+# 读取上调和下调的GO富集结果文件
+go_up_file <- "BP_OM-WT_YM-WT_up.txt"
+#go_down_file <- "BP_OM-WT_YM-WT_down.txt"
+
+go_up_data <- read.delim(go_up_file, header = TRUE, sep = "\t")
+#go_down_data <- read.delim(go_down_file, header = TRUE, sep = "\t")
+
+# 读取上调和下调的KEGG富集结果文件
+kegg_up_file <- "KEGG_OM-WT_YM-WT_up.txt"
+#kegg_down_file <- "KEGG_OM-WT_YM-WT_down.txt"
+
+kegg_up_data <- read.delim(kegg_up_file, header = TRUE, sep = "\t")
+#kegg_down_data <- read.delim(kegg_down_file, header = TRUE, sep = "\t")
+
+# 添加分组信息
+go_up_data$group <- "UP"
+#go_down_data$group <- "DOWN"
+kegg_up_data$group <- "UP"
+#kegg_down_data$group <- "DOWN"
+
+# 添加类别信息
+go_up_data$category <- "GO"
+#go_down_data$category <- "GO"
+kegg_up_data$category <- "KEGG"
+#kegg_down_data$category <- "KEGG"
+
+# 筛选出指定的上调和下调通路（可以根据需要调整）
+selected_go_up <- c(
+"natural killer cell mediated cytotoxicity",
+"natural killer cell mediated immunity"
+)
+
+#selected_go_down <- c(
+#  "regulation of cell growth",
+#  "mitochondrial ATP synthesis coupled electron transport"
+#)
+
+selected_kegg_up <- c(
+
+"Natural killer cell mediated cytotoxicity - Mus musculus (house mouse)",
+"Cell adhesion molecules - Mus musculus (house mouse)",
+"B cell receptor signaling pathway - Mus musculus (house mouse)"
+
+)
+
+#selected_kegg_down <- c(
+#  "Pathway C",
+#  "Pathway D"
+#  # 添加更多 KEGG 下调通路
+#)
+
+go_up_data <- go_up_data %>% filter(Description %in% selected_go_up)
+#go_down_data <- go_down_data %>% filter(Description %in% selected_go_down)
+kegg_up_data <- kegg_up_data %>% filter(Description %in% selected_kegg_up)
+#kegg_down_data <- kegg_down_data %>% filter(Description %in% selected_kegg_down)
+
+# 转换p值为-log10(p值)
+go_up_data$pvalue <- -log10(go_up_data$pvalue)
+#go_down_data$pvalue <- -log10(go_down_data$pvalue)
+kegg_up_data$pvalue <- -log10(kegg_up_data$pvalue)
+#kegg_down_data$pvalue <- -log10(kegg_down_data$pvalue)
+
+# 创建一个新的变量，用于分组上调和下调，确保下调部分为负数
+go_up_data$pvalue <- go_up_data$pvalue
+#go_down_data$pvalue <- -go_down_data$pvalue
+kegg_up_data$pvalue <- kegg_up_data$pvalue
+#kegg_down_data$pvalue <- -kegg_down_data$pvalue
+```
+
+
+```{r}
+# 保留用于绘图的变量，并使格式一致
+go_up_data <- go_up_data %>% 
+  select(Description, pvalue, group, category) %>% 
+  mutate(category = "GO")
+
+#go_down_data <- go_down_data %>% 
+#  select(Description, pvalue, group) %>% 
+#  mutate(category = "GO")
+
+kegg_up_data <- kegg_up_data %>% 
+  select(Description, pvalue, group, category) %>% 
+  mutate(category = "KEGG")
+
+#kegg_down_data <- kegg_down_data %>% 
+#  select(Description, pvalue, group) %>% 
+#  mutate(category = "KEGG")
+
+```
+
+```{r}
+# 保留用于绘图的变量，并使格式一致
+go_up_data <- go_up_data %>% 
+  select(Description, pvalue, group, category) %>% 
+  mutate(category = "GO")
+
+#go_down_data <- go_down_data %>% 
+#  select(Description, pvalue, group) %>% 
+#  mutate(category = "GO")
+
+kegg_up_data <- kegg_up_data %>% 
+  select(Description, pvalue, group, category) %>% 
+  mutate(category = "KEGG")
+
+#kegg_down_data <- kegg_down_data %>% 
+#  select(Description, pvalue, group) %>% 
+#  mutate(category = "KEGG")
+
+```
+
+
+```{r}
+# 合并数据
+data <- rbind(go_up_data, kegg_up_data)
+```
+
+
+```{r}
+# 去除描述因子的重复项
+data <- data %>% distinct(Description, .keep_all = TRUE)
+
+# 按类别和p值排序
+data <- data %>%
+  arrange(factor(category, levels = c("GO", "KEGG")), desc(pvalue))
+
+# 重新设置描述因子的水平
+data$Description <- factor(data$Description, levels = unique(data$Description))
+
+# 自定义主题
+mytheme <- theme(
+  axis.text.x = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  axis.ticks.y = element_blank(),
+  axis.text.y = element_text(size = 6, family = "Arial"),
+  axis.title.x = element_text(size = 6, family = "Arial"),
+  axis.title.y = element_text(size = 6, family = "Arial"),
+  axis.line = element_line(linewidth = 1),
+  plot.margin = unit(c(1, 0, 1, 0), "cm"), # up left down right
+  plot.title = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  legend.title = element_text(size = 6, family = "Arial"),
+  legend.text = element_text(size = 6, family = "Arial"),
+  legend.position = "right",
+  legend.background = element_rect(fill = 'transparent')
+)
+
+# 绘制条形图，调整条的宽度
+p <- ggplot(data = data, aes(x = Description, y = pvalue, fill = interaction(group, category))) +
+  geom_col(width = 0.8) +  # 调整条的宽度
+  coord_flip() +
+  scale_fill_manual(values = c('UP.GO' = '#A71981', 'DOWN.GO' = '#77C1EC', 'UP.KEGG' = '#FFA500', 'DOWN.KEGG' = '#00CED1')) +
+  labs(x = NULL, y = bquote("-" ~ Log[10] ~ "(P value)"), title = "GO and KEGG Term Enrichment") +
+  theme_bw() +
+  mytheme +
+  theme(
+    legend.position = "right",
+    axis.line.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank()
+  )
+
+# 添加标签
+p <- p + geom_text(data = subset(data, group == "UP"), aes(x = Description, y = -0.1, label = Description),
+                   hjust = 1, color = 'black', size = 2, family = "Arial") +
+     geom_text(data = subset(data, group == "DOWN"), aes(x = Description, y = 0.1, label = Description),
+               hjust = 0, color = 'black', size = 2, family = "Arial") +
+     scale_x_discrete(labels = NULL) +
+     scale_y_continuous(expand = expansion(add = c(0.1, 0.1)),
+                        limits = c(-4, 4), breaks = seq(-4, 4, 1),
+                        labels = c(4,3, 2, 1, 0, 1, 2, 3, 4))
+
+# 保存图像到文件
+ggsave(filename = "Fig5k_GO_and_KEGG_Term_Enrichment_Barplot", plot = p, width = 6.8, height = 3)  # 调整高度为 4
+
+
+```
+
+
+
+#Ext.Fig5m
+```{r}
+# 加载必要的库
+suppressPackageStartupMessages(library(clusterProfiler))
+library(tidyverse)
+library(ggplot2)
+library(RColorBrewer)
+library(readxl)
+
+# 读取上调和下调的GO富集结果文件
+go_up_file <- "BP_OF-WT_YF-WT_up.txt"
+#go_down_file <- "BP_OM-WT_YM-WT_down.txt"
+
+go_up_data <- read.delim(go_up_file, header = TRUE, sep = "\t")
+#go_down_data <- read.delim(go_down_file, header = TRUE, sep = "\t")
+
+# 读取上调和下调的KEGG富集结果文件
+kegg_up_file <- "KEGG_OF-WT_YF-WT_up.txt"
+#kegg_down_file <- "KEGG_OM-WT_YM-WT_down.txt"
+
+kegg_up_data <- read.delim(kegg_up_file, header = TRUE, sep = "\t")
+#kegg_down_data <- read.delim(kegg_down_file, header = TRUE, sep = "\t")
+
+# 添加分组信息
+go_up_data$group <- "UP"
+#go_down_data$group <- "DOWN"
+kegg_up_data$group <- "UP"
+#kegg_down_data$group <- "DOWN"
+
+# 添加类别信息
+go_up_data$category <- "GO"
+#go_down_data$category <- "GO"
+kegg_up_data$category <- "KEGG"
+#kegg_down_data$category <- "KEGG"
+
+# 筛选出指定的上调和下调通路（可以根据需要调整）
+selected_go_up <- c(
+"natural killer cell differentiation",
+"natural killer cell activation",
+"regulation of natural killer cell activation",
+"natural killer cell mediated cytotoxicity",
+"natural killer cell mediated immunity"
+)
+
+#selected_go_down <- c(
+#  "regulation of cell growth",
+#  "mitochondrial ATP synthesis coupled electron transport"
+#)
+
+selected_kegg_up <- c(
+"Natural killer cell mediated cytotoxicity - Mus musculus (house mouse)",
+"Fc gamma R-mediated phagocytosis - Mus musculus (house mouse)"
+)
+
+#selected_kegg_down <- c(
+#  "Pathway C",
+#  "Pathway D"
+#  # 添加更多 KEGG 下调通路
+#)
+
+go_up_data <- go_up_data %>% filter(Description %in% selected_go_up)
+#go_down_data <- go_down_data %>% filter(Description %in% selected_go_down)
+kegg_up_data <- kegg_up_data %>% filter(Description %in% selected_kegg_up)
+#kegg_down_data <- kegg_down_data %>% filter(Description %in% selected_kegg_down)
+
+# 转换p值为-log10(p值)
+go_up_data$pvalue <- -log10(go_up_data$pvalue)
+#go_down_data$pvalue <- -log10(go_down_data$pvalue)
+kegg_up_data$pvalue <- -log10(kegg_up_data$pvalue)
+#kegg_down_data$pvalue <- -log10(kegg_down_data$pvalue)
+
+# 创建一个新的变量，用于分组上调和下调，确保下调部分为负数
+go_up_data$pvalue <- go_up_data$pvalue
+#go_down_data$pvalue <- -go_down_data$pvalue
+kegg_up_data$pvalue <- kegg_up_data$pvalue
+#kegg_down_data$pvalue <- -kegg_down_data$pvalue
+```
+
+
+```{r}
+# 保留用于绘图的变量，并使格式一致
+go_up_data <- go_up_data %>% 
+  select(Description, pvalue, group, category) %>% 
+  mutate(category = "GO")
+
+#go_down_data <- go_down_data %>% 
+#  select(Description, pvalue, group) %>% 
+#  mutate(category = "GO")
+
+kegg_up_data <- kegg_up_data %>% 
+  select(Description, pvalue, group, category) %>% 
+  mutate(category = "KEGG")
+
+#kegg_down_data <- kegg_down_data %>% 
+#  select(Description, pvalue, group) %>% 
+#  mutate(category = "KEGG")
+
+```
+
+
+```{r}
+# 合并数据
+data <- rbind(go_up_data, kegg_up_data)
+```
+
+
+```{r}
+# 去除描述因子的重复项
+data <- data %>% distinct(Description, .keep_all = TRUE)
+
+# 按类别和p值排序
+data <- data %>%
+  arrange(factor(category, levels = c("GO", "KEGG")), desc(pvalue))
+
+# 重新设置描述因子的水平
+data$Description <- factor(data$Description, levels = unique(data$Description))
+
+# 重新设置描述因子的水平
+data$Description <- factor(data$Description, levels = unique(data$Description))
+
+# 自定义主题
+mytheme <- theme(
+  axis.text.x = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  axis.ticks.y = element_blank(),
+  axis.text.y = element_text(size = 6, family = "Arial"),
+  axis.title.x = element_text(size = 6, family = "Arial"),
+  axis.title.y = element_text(size = 6, family = "Arial"),
+  axis.line = element_line(linewidth = 1),
+  plot.margin = unit(c(1, 0, 1, 0), "cm"), # up left down right
+  plot.title = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  legend.title = element_text(size = 6, family = "Arial"),
+  legend.text = element_text(size = 6, family = "Arial"),
+  legend.position = "right",
+  legend.background = element_rect(fill = 'transparent')
+)
+
+# 绘制条形图，调整条的宽度
+p <- ggplot(data = data, aes(x = Description, y = pvalue, fill = interaction(group, category))) +
+  geom_col(width = 0.8) +  # 调整条的宽度
+  coord_flip() +
+  scale_fill_manual(values = c('UP.GO' = '#A71981', 'DOWN.GO' = '#77C1EC', 'UP.KEGG' = '#FFA500', 'DOWN.KEGG' = '#00CED1')) +
+  labs(x = NULL, y = bquote("-" ~ Log[10] ~ "(P value)"), title = "GO and KEGG Term Enrichment") +
+  theme_bw() +
+  mytheme +
+  theme(
+    legend.position = "right",
+    axis.line.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank()
+  )
+
+# 添加标签
+p <- p + geom_text(data = subset(data, group == "UP"), aes(x = Description, y = -0.1, label = Description),
+                   hjust = 1, color = 'black', size = 2, family = "Arial") +
+     geom_text(data = subset(data, group == "DOWN"), aes(x = Description, y = 0.1, label = Description),
+               hjust = 0, color = 'black', size = 2, family = "Arial") +
+     scale_x_discrete(labels = NULL) +
+     scale_y_continuous(expand = expansion(add = c(0.1, 0.1)),
+                        limits = c(-4, 4), breaks = seq(-4, 4, 1),
+                        labels = c(4,3, 2, 1, 0, 1, 2, 3, 4))
+
+# 保存图像到文件
+ggsave(filename = "Ext.Fig5m_GO_and_KEGG_Term_Enrichment_Barplot.pdf", plot = p, width = 6.8, height = 4)  # 调整高度为 4
+
+
+```
+

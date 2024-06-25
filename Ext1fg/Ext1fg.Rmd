@@ -1,0 +1,214 @@
+---
+title: "Extend figure"
+output: html_notebook
+---
+
+#male
+  
+```{r}
+# 加载必要的库
+suppressPackageStartupMessages(library(clusterProfiler))
+library(tidyverse)
+library(ggplot2)
+library(RColorBrewer)
+library(readxl)
+
+# 读取上调和下调的GO富集结果文件
+up_file <- "BP_OM-WT_YM-WT_up.txt"
+down_file <- "BP_OM-WT_YM-WT_down.txt"
+
+up_data <- read.delim(up_file, header = TRUE, sep = "\t")
+down_data <- read.delim(down_file, header = TRUE, sep = "\t")
+
+# 添加分组信息
+up_data$group <- "UP"
+down_data$group <- "DOWN"
+
+# 筛选出指定的上调和下调通路
+selected_up <- c(
+  "negative regulation of cell cycle process",
+  "positive regulation of execution phase of apoptosis",
+  "mitotic intra-S DNA damage checkpoint signaling",
+  "natural killer cell mediated cytotoxicity",
+  "natural killer cell mediated immunity"
+)
+
+selected_down <- c(
+  "regulation of cell growth",
+  "mitochondrial ATP synthesis coupled electron transport"
+)
+
+up_data <- up_data %>% filter(Description %in% selected_up)
+down_data <- down_data %>% filter(Description %in% selected_down)
+
+# 转换p值为-log10(p值)
+up_data$pvalue <- -log10(up_data$pvalue)
+down_data$pvalue <- -log10(down_data$pvalue)
+
+# 创建一个新的变量，用于分组上调和下调，确保下调部分为负数
+up_data$pvalue <- up_data$pvalue
+down_data$pvalue <- -down_data$pvalue
+
+# 合并数据
+data <- rbind(up_data, down_data)
+
+# 去除描述因子的重复项
+data <- data %>% distinct(Description, .keep_all = TRUE)
+
+# 按p值排序
+data <- data[order(data$pvalue), ]
+
+# 创建描述因子，并设置顺序
+data$Description <- factor(data$Description, levels = unique(data$Description))
+
+# 自定义主题
+mytheme <- theme(
+  axis.text.x = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  axis.ticks.y = element_blank(),
+  axis.text.y = element_text(size = 6, family = "Arial"),
+  axis.title.x = element_text(size = 6, family = "Arial"),
+  axis.title.y = element_text(size = 6, family = "Arial"),
+  axis.line = element_line(linewidth = 1),
+  plot.margin = unit(c(1, 1, 0.5, 1), "cm"), # up left down right
+  plot.title = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  legend.title = element_text(size = 6, family = "Arial"),
+  legend.text = element_text(size = 6, family = "Arial"),
+  legend.position = "right",
+  legend.background = element_rect(fill = 'transparent')
+)
+
+# 绘制条形图，调整条的宽度
+p <- ggplot(data = data, aes(x = Description, y = pvalue, fill = group)) +
+  geom_col(width = 0.8) +  # 调整条的宽度
+  coord_flip() +
+  scale_fill_manual(values = c('UP' = '#5558c7', 'DOWN' = '#009bff')) +
+  labs(x = NULL, y = bquote("-" ~ Log[10] ~ "(P value)"), title = "GO Term Enrichment") +
+  theme_bw() +
+  mytheme +
+  theme(
+    legend.position = "none",
+    axis.line.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank()
+  )
+
+# 添加标签
+p <- p + geom_text(data = subset(data, group == "UP"), aes(x = Description, y = -0.1, label = Description),
+                   hjust = 1, color = 'black', size = 2, family = "Arial") +
+     geom_text(data = subset(data, group == "DOWN"), aes(x = Description, y = 0.1, label = Description),
+               hjust = 0, color = 'black', size = 2, family = "Arial") +
+     scale_x_discrete(labels = NULL) +
+     scale_y_continuous(expand = expansion(add = c(0.1, 0.1)),
+                        limits = c(-3, 3), breaks = seq(-3, 3, 1),
+                        labels = c(3, 2, 1, 0, 1, 2, 3))
+
+# 保存图像到文件
+ggsave(filename = "GO_Term_Enrichment_Barplot.pdf", plot = p, width = 5, height = 4)  # 调整高度为 4
+
+```
+
+#female
+```{r}
+# 加载必要的库
+suppressPackageStartupMessages(library(clusterProfiler))
+library(tidyverse)
+library(ggplot2)
+library(RColorBrewer)
+library(readxl)
+
+# 读取上调和下调的GO富集结果文件
+up_file <- "BP_OF-WT_YF-WT_up.txt"
+down_file <- "BP_OF-WT_YF-WT_down.txt"
+
+up_data <- read.delim(up_file, header = TRUE, sep = "\t")
+down_data <- read.delim(down_file, header = TRUE, sep = "\t")
+
+# 添加分组信息
+up_data$group <- "UP"
+down_data$group <- "DOWN"
+
+# 筛选出指定的上调和下调通路
+selected_up <- c(
+  "negative regulation of cell cycle process",
+  "positive regulation of execution phase of apoptosis",
+  "mitotic intra-S DNA damage checkpoint signaling",
+  "natural killer cell mediated cytotoxicity",
+  "natural killer cell mediated immunity"
+)
+
+selected_down <- c(
+  "regulation of cell growth",
+  "mitochondrial ATP synthesis coupled electron transport"
+)
+
+up_data <- up_data %>% filter(Description %in% selected_up)
+down_data <- down_data %>% filter(Description %in% selected_down)
+
+# 转换p值为-log10(p值)
+up_data$pvalue <- -log10(up_data$pvalue)
+down_data$pvalue <- -log10(down_data$pvalue)
+
+# 创建一个新的变量，用于分组上调和下调，确保下调部分为负数
+up_data$pvalue <- up_data$pvalue
+down_data$pvalue <- -down_data$pvalue
+
+# 合并数据
+data <- rbind(up_data, down_data)
+
+# 去除描述因子的重复项
+data <- data %>% distinct(Description, .keep_all = TRUE)
+
+# 按p值排序
+data <- data[order(data$pvalue), ]
+
+# 创建描述因子，并设置顺序
+data$Description <- factor(data$Description, levels = unique(data$Description))
+
+# 自定义主题
+mytheme <- theme(
+  axis.text.x = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  axis.ticks.y = element_blank(),
+  axis.text.y = element_text(size = 6, family = "Arial"),
+  axis.title.x = element_text(size = 6, family = "Arial"),
+  axis.title.y = element_text(size = 6, family = "Arial"),
+  axis.line = element_line(linewidth = 1),
+  plot.margin = unit(c(1, 1, 0.5, 1), "cm"), # up left down right
+  plot.title = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  legend.title = element_text(size = 6, family = "Arial"),
+  legend.text = element_text(size = 6, family = "Arial"),
+  legend.position = "right",
+  legend.background = element_rect(fill = 'transparent')
+)
+
+# 绘制条形图，调整条的宽度
+p <- ggplot(data = data, aes(x = Description, y = pvalue, fill = group)) +
+  geom_col(width = 0.8) +  # 调整条的宽度
+  coord_flip() +
+  scale_fill_manual(values = c('UP' = '#FF4500', 'DOWN' = '#FFA500')) +
+  labs(x = NULL, y = bquote("-" ~ Log[10] ~ "(P value)"), title = "GO Term Enrichment") +
+  theme_bw() +
+  mytheme +
+  theme(
+    legend.position = "none",
+    axis.line.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank()
+  )
+
+# 添加标签
+p <- p + geom_text(data = subset(data, group == "UP"), aes(x = Description, y = -0.1, label = Description),
+                   hjust = 1, color = 'black', size = 2, family = "Arial") +
+     geom_text(data = subset(data, group == "DOWN"), aes(x = Description, y = 0.1, label = Description),
+               hjust = 0, color = 'black', size = 2, family = "Arial") +
+     scale_x_discrete(labels = NULL) +
+     scale_y_continuous(expand = expansion(add = c(0.1, 0.1)),
+                        limits = c(-4, 4), breaks = seq(-4, 4, 1),
+                        labels = c(4,3, 2, 1, 0, 1, 2, 3,4))
+
+# 保存图像到文件
+ggsave(filename = "GO_Term_Enrichment_Barplot.pdf", plot = p, width = 5, height = 4)  # 调整高度为 4
+
+```
+

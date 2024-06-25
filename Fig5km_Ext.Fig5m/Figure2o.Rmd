@@ -1,0 +1,512 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+# 加载必要的库
+suppressPackageStartupMessages(library(clusterProfiler))
+library(tidyverse)
+library(ggplot2)
+library(RColorBrewer)
+library(readxl)
+
+# 读取上调和下调的GO富集结果文件
+go_up_file_1 <- "BP_OF-WT_YF-WT_up.txt"
+go_down_file_1 <- "BP_OF-WT_YF-WT_down.txt"
+go_up_file_2 <- "BP_OM-WT_YM-WT_up.txt"
+go_down_file_2 <- "BP_OM-WT_YM-WT_down.txt"
+
+go_up_data_1 <- read.delim(go_up_file_1, header = TRUE, sep = "\t")
+go_down_data_1 <- read.delim(go_down_file_1, header = TRUE, sep = "\t")
+go_up_data_2 <- read.delim(go_up_file_2, header = TRUE, sep = "\t")
+go_down_data_2 <- read.delim(go_down_file_2, header = TRUE, sep = "\t")
+
+# 添加分组信息
+go_up_data_1$group <- "UP"
+go_down_data_1$group <- "DOWN"
+go_up_data_2$group <- "UP"
+go_down_data_2$group <- "DOWN"
+
+# 添加样本信息
+go_up_data_1$sample <- "OF-WT_YF-WT"
+go_down_data_1$sample <- "OF-WT_YF-WT"
+go_up_data_2$sample <- "OM-WT_YM-WT"
+go_down_data_2$sample <- "OM-WT_YM-WT"
+
+# 筛选出指定的通路
+selected_pathways <- c(
+  "phagocytosis",
+  "positive regulation of phagocytosis",
+  "regulation of leukocyte apoptotic process",
+  "regulation of tumor necrosis factor production",
+  "regulation of tumor necrosis factor superfamily cytokine production",
+  "cellular response to reactive oxygen species",
+  "leukocyte apoptotic process",
+  "negative regulation of cell growth"
+)
+
+go_up_data_1 <- go_up_data_1 %>% filter(Description %in% selected_pathways)
+go_down_data_1 <- go_down_data_1 %>% filter(Description %in% selected_pathways)
+go_up_data_2 <- go_up_data_2 %>% filter(Description %in% selected_pathways)
+go_down_data_2 <- go_down_data_2 %>% filter(Description %in% selected_pathways)
+
+# 转换p值为-log10(p值)
+go_up_data_1$pvalue <- -log10(go_up_data_1$pvalue)
+go_down_data_1$pvalue <- -log10(go_down_data_1$pvalue)
+go_up_data_2$pvalue <- -log10(go_up_data_2$pvalue)
+go_down_data_2$pvalue <- -log10(go_down_data_2$pvalue)
+
+# 创建一个新的变量，用于分组上调和下调，确保下调部分为负数
+go_up_data_1$pvalue <- go_up_data_1$pvalue
+go_down_data_1$pvalue <- -go_down_data_1$pvalue
+go_up_data_2$pvalue <- go_up_data_2$pvalue
+go_down_data_2$pvalue <- -go_down_data_2$pvalue
+
+# 添加复合注释信息
+go_up_data_1$composite_label <- paste(go_up_data_1$sample, "UP", go_up_data_1$Description, sep = "_")
+go_down_data_1$composite_label <- paste(go_down_data_1$sample, "DOWN", go_down_data_1$Description, sep = "_")
+go_up_data_2$composite_label <- paste(go_up_data_2$sample, "UP", go_up_data_2$Description, sep = "_")
+go_down_data_2$composite_label <- paste(go_down_data_2$sample, "DOWN", go_down_data_2$Description, sep = "_")
+
+# 合并数据
+data <- rbind(go_up_data_1, go_down_data_1, go_up_data_2, go_down_data_2)
+
+# 按样本、分组和p值排序
+data <- data %>%
+  arrange(sample, factor(group, levels = c("UP", "DOWN")), desc(pvalue))
+
+# 重新设置描述因子的水平
+data$composite_label <- factor(data$composite_label, levels = unique(data$composite_label))
+
+# 自定义主题
+mytheme <- theme(
+  axis.text.x = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  axis.ticks.y = element_blank(),
+  axis.text.y = element_text(size = 6, family = "Arial"),
+  axis.title.x = element_text(size = 6, family = "Arial"),
+  axis.title.y = element_text(size = 6, family = "Arial"),
+  axis.line = element_line(linewidth = 1),
+  plot.margin = unit(c(1, 1, 1, 1), "cm"),
+  plot.title = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  legend.title = element_text(size = 6, family = "Arial"),
+  legend.text = element_text(size = 6, family = "Arial"),
+  legend.position = "right",
+  legend.background = element_rect(fill = 'transparent')
+)
+
+# 绘制条形图，调整条的宽度
+p <- ggplot(data = data, aes(x = composite_label, y = pvalue, fill = interaction(group, sample))) +
+  geom_col(width = 0.6) +  # 调整条的宽度
+  coord_flip() +
+  scale_fill_manual(values = c('UP.OF-WT_YF-WT' = '#A71981', 'DOWN.OF-WT_YF-WT' = '#77C1EC', 'UP.OM-WT_YM-WT' = '#FFA500', 'DOWN.OM-WT_YM-WT' = '#00CED1')) +
+  labs(x = NULL, y = bquote("-" ~ Log[10] ~ "(P value)"), title = "GO Term Enrichment by Sample and Group") +
+  theme_bw() +
+  mytheme +
+  theme(
+    legend.position = "right",
+    axis.line.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank()
+  )
+
+# 添加标签
+p <- p + geom_text(aes(label = Description), 
+                   position = position_dodge(width = 0.6), 
+                   hjust = 0, color = 'black', size = 2, family = "Arial") +
+     scale_x_discrete(labels = NULL) +
+     scale_y_continuous(expand = expansion(add = c(0.1, 0.1)),
+                        limits = c(-10, 10), breaks = seq(-10, 10, 2),
+                        labels = c(10, 8, 6, 4, 2, 0, 2, 4, 6, 8, 10))
+
+# 保存图像到文件
+ggsave(filename = "GO_Term_Enrichment_Barplot.pdf", plot = p, width = 12, height = 6)  # 调整高度和宽度
+p
+
+```
+
+```{r}
+# 加载必要的库
+suppressPackageStartupMessages(library(clusterProfiler))
+library(tidyverse)
+library(ggplot2)
+library(RColorBrewer)
+library(readxl)
+
+# 读取上调和下调的GO富集结果文件
+go_up_file_1 <- "BP_OF-WT_YF-WT_up.txt"
+go_down_file_1 <- "BP_OF-WT_YF-WT_down.txt"
+go_up_file_2 <- "BP_OM-WT_YM-WT_up.txt"
+go_down_file_2 <- "BP_OM-WT_YM-WT_down.txt"
+
+go_up_data_1 <- read.delim(go_up_file_1, header = TRUE, sep = "\t")
+go_down_data_1 <- read.delim(go_down_file_1, header = TRUE, sep = "\t")
+go_up_data_2 <- read.delim(go_up_file_2, header = TRUE, sep = "\t")
+go_down_data_2 <- read.delim(go_down_file_2, header = TRUE, sep = "\t")
+
+# 添加分组信息
+go_up_data_1$group <- "UP"
+go_down_data_1$group <- "DOWN"
+go_up_data_2$group <- "UP"
+go_down_data_2$group <- "DOWN"
+
+# 添加样本信息
+go_up_data_1$sample <- "OF-WT_YF-WT"
+go_down_data_1$sample <- "OF-WT_YF-WT"
+go_up_data_2$sample <- "OM-WT_YM-WT"
+go_down_data_2$sample <- "OM-WT_YM-WT"
+
+# 筛选出指定的通路
+selected_pathways <- c(
+  "phagocytosis",
+  "positive regulation of phagocytosis",
+  "regulation of leukocyte apoptotic process",
+  "regulation of tumor necrosis factor production",
+  "regulation of tumor necrosis factor superfamily cytokine production",
+  "cellular response to reactive oxygen species",
+  "leukocyte apoptotic process",
+  "negative regulation of cell growth"
+)
+
+go_up_data_1 <- go_up_data_1 %>% filter(Description %in% selected_pathways)
+go_down_data_1 <- go_down_data_1 %>% filter(Description %in% selected_pathways)
+go_up_data_2 <- go_up_data_2 %>% filter(Description %in% selected_pathways)
+go_down_data_2 <- go_down_data_2 %>% filter(Description %in% selected_pathways)
+
+# 转换p值为-log10(p值)
+go_up_data_1$pvalue <- -log10(go_up_data_1$pvalue)
+go_down_data_1$pvalue <- -log10(go_down_data_1$pvalue)
+go_up_data_2$pvalue <- -log10(go_up_data_2$pvalue)
+go_down_data_2$pvalue <- -log10(go_down_data_2$pvalue)
+
+# 创建一个新的变量，用于分组上调和下调，确保下调部分为负数
+go_up_data_1$pvalue <- go_up_data_1$pvalue
+go_down_data_1$pvalue <- -go_down_data_1$pvalue
+go_up_data_2$pvalue <- go_up_data_2$pvalue
+go_down_data_2$pvalue <- -go_down_data_2$pvalue
+
+# 添加复合注释信息
+go_up_data_1$composite_label <- paste(go_up_data_1$sample, "UP", go_up_data_1$Description, sep = "_")
+go_down_data_1$composite_label <- paste(go_down_data_1$sample, "DOWN", go_down_data_1$Description, sep = "_")
+go_up_data_2$composite_label <- paste(go_up_data_2$sample, "UP", go_up_data_2$Description, sep = "_")
+go_down_data_2$composite_label <- paste(go_down_data_2$sample, "DOWN", go_down_data_2$Description, sep = "_")
+
+# 合并数据
+data <- rbind(go_up_data_1, go_down_data_1, go_up_data_2, go_down_data_2)
+
+# 按样本、分组和p值排序
+data <- data %>%
+  arrange(sample, factor(group, levels = c("UP", "DOWN")), desc(pvalue))
+
+# 重新设置描述因子的水平
+data$composite_label <- factor(data$composite_label, levels = unique(data$composite_label))
+
+# 自定义主题
+mytheme <- theme(
+  axis.text.x = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  axis.ticks.y = element_blank(),
+  axis.text.y = element_text(size = 6, family = "Arial"),
+  axis.title.x = element_text(size = 6, family = "Arial"),
+  axis.title.y = element_text(size = 6, family = "Arial"),
+  axis.line = element_line(linewidth = 1),
+  plot.margin = unit(c(1, 1, 1, 1), "cm"),
+  plot.title = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  legend.title = element_text(size = 6, family = "Arial"),
+  legend.text = element_text(size = 6, family = "Arial"),
+  legend.position = "right",
+  legend.background = element_rect(fill = 'transparent')
+)
+
+# 绘制条形图，调整条的宽度
+p <- ggplot(data = data, aes(x = composite_label, y = pvalue, fill = interaction(group, sample))) +
+  geom_col(width = 0.6) +  # 调整条的宽度
+  coord_flip() +
+  scale_fill_manual(values = c('UP.OF-WT_YF-WT' = '#A71981', 'DOWN.OF-WT_YF-WT' = '#77C1EC', 'UP.OM-WT_YM-WT' = '#FFA500', 'DOWN.OM-WT_YM-WT' = '#00CED1')) +
+  labs(x = NULL, y = bquote("-" ~ Log[10] ~ "(P value)"), title = "GO Term Enrichment by Sample and Group") +
+  theme_bw() +
+  mytheme +
+  theme(
+    legend.position = "right",
+    axis.line.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank()
+  )
+
+# 添加标签，确保DOWN的标签在右侧，UP的标签在左侧
+p <- p + geom_text(data = subset(data, group == "UP"), aes(x = composite_label, y = -0.1, label = Description),
+                   hjust = 1, color = 'black', size = 2, family = "Arial") +
+     geom_text(data = subset(data, group == "DOWN"), aes(x = composite_label, y = 0.1, label = Description),
+               hjust = 0, color = 'black', size = 2, family = "Arial") +
+     scale_x_discrete(labels = NULL) +
+     scale_y_continuous(expand = expansion(add = c(0.1, 0.1)),
+                        limits = c(-8, 8), breaks = seq(-8, 8, 2),
+                        labels = c(8, 6, 4, 2, 0, 2, 4, 6, 8))
+
+# 保存图像到文件
+ggsave(filename = "GO_Term_Enrichment_Barplot.pdf", plot = p, width = 12, height = 6)  # 调整高度和宽度
+
+```
+
+
+
+```{r}
+# 加载必要的库
+suppressPackageStartupMessages(library(clusterProfiler))
+library(tidyverse)
+library(ggplot2)
+library(RColorBrewer)
+library(readxl)
+
+# 读取上调和下调的GO富集结果文件
+go_up_file_1 <- "BP_OF-WT_YF-WT_up.txt"
+go_down_file_1 <- "BP_OF-WT_YF-WT_down.txt"
+go_up_file_2 <- "BP_OM-WT_YM-WT_up.txt"
+go_down_file_2 <- "BP_OM-WT_YM-WT_down.txt"
+
+go_up_data_1 <- read.delim(go_up_file_1, header = TRUE, sep = "\t")
+go_down_data_1 <- read.delim(go_down_file_1, header = TRUE, sep = "\t")
+go_up_data_2 <- read.delim(go_up_file_2, header = TRUE, sep = "\t")
+go_down_data_2 <- read.delim(go_down_file_2, header = TRUE, sep = "\t")
+
+# 添加分组信息
+go_up_data_1$group <- "UP"
+go_down_data_1$group <- "DOWN"
+go_up_data_2$group <- "UP"
+go_down_data_2$group <- "DOWN"
+
+# 添加样本信息
+go_up_data_1$sample <- "OF-WT_YF-WT"
+go_down_data_1$sample <- "OF-WT_YF-WT"
+go_up_data_2$sample <- "OM-WT_YM-WT"
+go_down_data_2$sample <- "OM-WT_YM-WT"
+
+# 筛选出指定的通路
+selected_pathways <- c(
+  "phagocytosis",
+  "positive regulation of phagocytosis",
+  "regulation of leukocyte apoptotic process",
+  "regulation of tumor necrosis factor production",
+  "regulation of tumor necrosis factor superfamily cytokine production",
+  "cellular response to reactive oxygen species",
+  "leukocyte apoptotic process",
+  "negative regulation of cell growth"
+)
+
+go_up_data_1 <- go_up_data_1 %>% filter(Description %in% selected_pathways)
+go_down_data_1 <- go_down_data_1 %>% filter(Description %in% selected_pathways)
+go_up_data_2 <- go_up_data_2 %>% filter(Description %in% selected_pathways)
+go_down_data_2 <- go_down_data_2 %>% filter(Description %in% selected_pathways)
+
+# 转换p值为-log10(p值)
+go_up_data_1$pvalue <- -log10(go_up_data_1$pvalue)
+go_down_data_1$pvalue <- -log10(go_down_data_1$pvalue)
+go_up_data_2$pvalue <- -log10(go_up_data_2$pvalue)
+go_down_data_2$pvalue <- -log10(go_down_data_2$pvalue)
+
+# 创建一个新的变量，用于分组上调和下调，确保下调部分为负数
+go_up_data_1$pvalue <- go_up_data_1$pvalue
+go_down_data_1$pvalue <- -go_down_data_1$pvalue
+go_up_data_2$pvalue <- go_up_data_2$pvalue
+go_down_data_2$pvalue <- -go_down_data_2$pvalue
+
+# 添加复合注释信息
+go_up_data_1$composite_label <- paste(go_up_data_1$sample, "UP", go_up_data_1$Description, sep = "_")
+go_down_data_1$composite_label <- paste(go_down_data_1$sample, "DOWN", go_down_data_1$Description, sep = "_")
+go_up_data_2$composite_label <- paste(go_up_data_2$sample, "UP", go_up_data_2$Description, sep = "_")
+go_down_data_2$composite_label <- paste(go_down_data_2$sample, "DOWN", go_down_data_2$Description, sep = "_")
+
+# 合并数据
+data <- rbind(go_up_data_1, go_down_data_1, go_up_data_2, go_down_data_2)
+
+# 按指定顺序排序并颠倒顺序
+data <- data %>%
+  mutate(order = case_when(
+    group == "UP" & sample == "OF-WT_YF-WT" ~ 1,
+    group == "UP" & sample == "OM-WT_YM-WT" ~ 2,
+    group == "DOWN" & sample == "OF-WT_YF-WT" ~ 3,
+    group == "DOWN" & sample == "OM-WT_YM-WT" ~ 4
+  )) %>%
+  arrange(desc(order), desc(pvalue))
+
+# 重新设置描述因子的水平
+data$composite_label <- factor(data$composite_label, levels = unique(data$composite_label))
+
+# 自定义主题
+mytheme <- theme(
+  axis.text.x = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  axis.ticks.y = element_blank(),
+  axis.text.y = element_text(size = 6, family = "Arial"),
+  axis.title.x = element_text(size = 6, family = "Arial"),
+  axis.title.y = element_text(size = 6, family = "Arial"),
+  axis.line = element_line(linewidth = 1),
+  plot.margin = unit(c(1, 1, 1, 1), "cm"),
+  plot.title = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  legend.title = element_text(size = 6, family = "Arial"),
+  legend.text = element_text(size = 6, family = "Arial"),
+  legend.position = "right",
+  legend.background = element_rect(fill = 'transparent')
+)
+
+# 绘制条形图，调整条的宽度
+p <- ggplot(data = data, aes(x = composite_label, y = pvalue, fill = interaction(group, sample))) +
+  geom_col(width = 0.6) +  # 调整条的宽度
+  coord_flip() +
+  scale_fill_manual(values = c('UP.OF-WT_YF-WT' = '#A71981', 'DOWN.OF-WT_YF-WT' = '#77C1EC', 'UP.OM-WT_YM-WT' = '#FFA500', 'DOWN.OM-WT_YM-WT' = '#00CED1')) +
+  labs(x = NULL, y = bquote("-" ~ Log[10] ~ "(P value)"), title = "GO Term Enrichment by Sample and Group") +
+  theme_bw() +
+  mytheme +
+  theme(
+    legend.position = "right",
+    axis.line.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank()
+  )
+
+# 添加标签，确保DOWN的标签在右侧，UP的标签在左侧
+p <- p + geom_text(data = subset(data, group == "UP"), aes(x = composite_label, y = -0.1, label = Description),
+                   hjust = 1, color = 'black', size = 2, family = "Arial") +
+     geom_text(data = subset(data, group == "DOWN"), aes(x = composite_label, y = 0.1, label = Description),
+               hjust = 0, color = 'black', size = 2, family = "Arial") +
+     scale_x_discrete(labels = NULL) +
+     scale_y_continuous(expand = expansion(add = c(0.1, 0.1)),
+                        limits = c(-10, 10), breaks = seq(-10, 10, 2),
+                        labels = c(10, 8, 6, 4, 2, 0, 2, 4, 6, 8, 10))
+
+# 保存图像到文件
+ggsave(filename = "GO_Term_Enrichment_Barplot_Reversed.pdf", plot = p, width = 12, height = 6)  # 调整高度和宽度
+```
+
+
+```{r}
+# 加载必要的库
+suppressPackageStartupMessages(library(clusterProfiler))
+library(tidyverse)
+library(ggplot2)
+library(RColorBrewer)
+library(readxl)
+
+# 读取上调和下调的GO富集结果文件
+go_up_file_1 <- "BP_OF-WT_YF-WT_up.txt"
+go_down_file_1 <- "BP_OF-WT_YF-WT_down.txt"
+go_up_file_2 <- "BP_OM-WT_YM-WT_up.txt"
+go_down_file_2 <- "BP_OM-WT_YM-WT_down.txt"
+
+go_up_data_1 <- read.delim(go_up_file_1, header = TRUE, sep = "\t")
+go_down_data_1 <- read.delim(go_down_file_1, header = TRUE, sep = "\t")
+go_up_data_2 <- read.delim(go_up_file_2, header = TRUE, sep = "\t")
+go_down_data_2 <- read.delim(go_down_file_2, header = TRUE, sep = "\t")
+
+# 添加分组信息
+go_up_data_1$group <- "UP"
+go_down_data_1$group <- "DOWN"
+go_up_data_2$group <- "UP"
+go_down_data_2$group <- "DOWN"
+
+# 添加样本信息
+go_up_data_1$sample <- "OF-WT_YF-WT"
+go_down_data_1$sample <- "OF-WT_YF-WT"
+go_up_data_2$sample <- "OM-WT_YM-WT"
+go_down_data_2$sample <- "OM-WT_YM-WT"
+
+# 筛选出指定的通路
+selected_pathways <- c(
+  "phagocytosis",
+  "positive regulation of phagocytosis",
+  "regulation of leukocyte apoptotic process",
+  "regulation of tumor necrosis factor production",
+  "regulation of tumor necrosis factor superfamily cytokine production",
+  "cellular response to reactive oxygen species",
+  "leukocyte apoptotic process",
+  "negative regulation of cell growth"
+)
+
+go_up_data_1 <- go_up_data_1 %>% filter(Description %in% selected_pathways)
+go_down_data_1 <- go_down_data_1 %>% filter(Description %in% selected_pathways)
+go_up_data_2 <- go_up_data_2 %>% filter(Description %in% selected_pathways)
+go_down_data_2 <- go_down_data_2 %>% filter(Description %in% selected_pathways)
+
+# 转换p值为-log10(p值)
+go_up_data_1$pvalue <- -log10(go_up_data_1$pvalue)
+go_down_data_1$pvalue <- -log10(go_down_data_1$pvalue)
+go_up_data_2$pvalue <- -log10(go_up_data_2$pvalue)
+go_down_data_2$pvalue <- -log10(go_down_data_2$pvalue)
+
+# 创建一个新的变量，用于分组上调和下调，确保下调部分为负数
+go_up_data_1$pvalue <- go_up_data_1$pvalue
+go_down_data_1$pvalue <- -go_down_data_1$pvalue
+go_up_data_2$pvalue <- go_up_data_2$pvalue
+go_down_data_2$pvalue <- -go_down_data_2$pvalue
+
+# 添加复合注释信息
+go_up_data_1$composite_label <- paste(go_up_data_1$sample, "UP", go_up_data_1$Description, sep = "_")
+go_down_data_1$composite_label <- paste(go_down_data_1$sample, "DOWN", go_down_data_1$Description, sep = "_")
+go_up_data_2$composite_label <- paste(go_up_data_2$sample, "UP", go_up_data_2$Description, sep = "_")
+go_down_data_2$composite_label <- paste(go_down_data_2$sample, "DOWN", go_down_data_2$Description, sep = "_")
+
+# 合并数据
+data <- rbind(go_up_data_1, go_down_data_1, go_up_data_2, go_down_data_2)
+
+# 按指定顺序排序
+data <- data %>%
+  mutate(order = case_when(
+    group == "UP" & sample == "OF-WT_YF-WT" ~ 2,
+    group == "DOWN" & sample == "OF-WT_YF-WT" ~ 1,
+    group == "UP" & sample == "OM-WT_YM-WT" ~ 4,
+    group == "DOWN" & sample == "OM-WT_YM-WT" ~ 3
+  )) %>%
+  arrange(order, pvalue)
+
+# 重新设置描述因子的水平
+data$composite_label <- factor(data$composite_label, levels = unique(data$composite_label))
+
+# 自定义主题
+mytheme <- theme(
+  axis.text.x = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  axis.ticks.y = element_blank(),
+  axis.text.y = element_text(size = 6, family = "Arial"),
+  axis.title.x = element_text(size = 6, family = "Arial"),
+  axis.title.y = element_text(size = 6, family = "Arial"),
+  axis.line = element_line(linewidth = 1),
+  plot.margin = unit(c(1, 1, 1, 1), "cm"),
+  plot.title = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  legend.title = element_text(size = 6, family = "Arial"),
+  legend.text = element_text(size = 6, family = "Arial"),
+  legend.position = "right",
+  legend.background = element_rect(fill = 'transparent')
+)
+
+# 绘制条形图，调整条的宽度
+p <- ggplot(data = data, aes(x = composite_label, y = pvalue, fill = interaction(group, sample))) +
+  geom_col(width = 0.6) +  # 调整条的宽度
+  coord_flip() +
+  scale_fill_manual(values = c('UP.OF-WT_YF-WT' = '#A71981', 'DOWN.OF-WT_YF-WT' = '#77C1EC', 'UP.OM-WT_YM-WT' = '#FFA500', 'DOWN.OM-WT_YM-WT' = '#00CED1')) +
+  labs(x = NULL, y = bquote("-" ~ Log[10] ~ "(P value)"), title = "GO Term Enrichment by Sample and Group") +
+  theme_bw() +
+  mytheme +
+  theme(
+    legend.position = "right",
+    axis.line.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank()
+  )
+
+# 添加标签，确保DOWN的标签在右侧，UP的标签在左侧
+p <- p + geom_text(data = subset(data, group == "UP"), aes(x = composite_label, y = -0.1, label = Description),
+                   hjust = 1, color = 'black', size = 2, family = "Arial") +
+     geom_text(data = subset(data, group == "DOWN"), aes(x = composite_label, y = 0.1, label = Description),
+               hjust = 0, color = 'black', size = 2, family = "Arial") +
+     scale_x_discrete(labels = NULL) +
+     scale_y_continuous(expand = expansion(add = c(0.1, 0.1)),
+                        limits = c(-7.5, 7.5), breaks = seq(-8, 8, 2),
+                        labels = c(8, 6, 4, 2, 0, 2, 4, 6, 8))
+
+# 保存图像到文件
+ggsave(filename = "Figure2o_GO_Term_Enrichment_Barplot.pdf", plot = p, width = 12, height = 6)  # 调整高度和宽度
+
+```
+

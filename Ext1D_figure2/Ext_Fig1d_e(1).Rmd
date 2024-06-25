@@ -1,0 +1,215 @@
+---
+title: "Extend figure"
+output: html_notebook
+---
+
+火山图的出图的比例是1:1，字体Arial，字号6，为回避版权问题，在Mac上进行绘制。 出图增加了重叠数量和注释导引线的长度
+
+```{r}
+getwd()
+```
+
+```{r}
+library(knitr)
+opts_chunk$set(fig.width = 16, fig.height = 16)
+```
+
+
+#注释的版本 ###female
+
+```{r}
+# 基础代码
+# 设置图形输出选项为 'cairo'
+options(bitmapType = 'cairo')
+
+# 加载 ggplot2 和 EnhancedVolcano 库
+library(ggplot2)
+library(EnhancedVolcano)
+
+
+# 读取差异基因分析结果的 CSV 文件，文件路径为 "/hdd/hlf/result/bulk/deg/gene/OF-WT_YF-WT/2-DEG_intersect_results.csv"
+deg<-read.csv("~/waibao_hezuo/OF-WT_YF-WT_2-DEG_intersect_results.csv",row.names=1)
+
+# 选择感兴趣的列并重命名
+deg <- deg[, c("log2FoldChange_DESeq2", "padj_DESeq2")]
+colnames(deg) <- c("log2FoldChange", "padj")
+
+# 将 deg 数据赋值给 DEG
+DEG <- deg
+
+# 设置 logFC 的阈值
+logFC_cutoff <- 1
+
+# 根据 logFC 和 padj 的值给基因分类
+DEG$change <- as.factor(ifelse(DEG$padj < 0.05 & abs(DEG$log2FoldChange) > logFC_cutoff,
+                               ifelse(DEG$log2FoldChange > logFC_cutoff, "UP", "DOWN"),
+                               "NOT"))
+
+# 生成图表标题
+this_title <- paste0('Cutoff for log2FC is ', round(logFC_cutoff, 3),
+                     '\nThe number of up gene is ', nrow(DEG[DEG$change == 'UP',]),
+                     '\nThe number of down gene is ', nrow(DEG[DEG$change == 'DOWN',]))
+
+# 删除缺失值
+DEG <- na.omit(DEG)
+
+
+# 绘制火山图
+ggplot(data = DEG, aes(x = log2FoldChange, y = -log10(padj), color = change)) +
+  geom_point(alpha = 0.8, size = 3) +
+  labs(x = "log2 fold change", y = "-log10 padj") +
+  ggtitle(this_title) +
+  theme_bw(base_size = 20) +
+  theme(plot.title = element_text(size = 15, hjust = 0.5)) +
+  scale_color_manual(values = c('#a121f0', '#bebebe', '#ffad21')) -> p1
+
+# 设置 x 和 y 轴的范围
+p1 + xlim(NA, 10) + ylim(NA, 30) -> p2
+
+# 加载 patchwork 库以合并图表
+library(patchwork)
+
+# 显示图表 p1 和 p2
+# 这里的p2是最后的结果，为了高亮某些基因，有了下面的一部分的代码
+p1 + p2
+p2
+```
+
+```{r}
+# 本部分代码只为高亮一部分基因
+# 高亮某些基因
+highlight_genes <- c("Sdcbp2", "Kcnk1", "Car2", "Zfp345", "Ctsf", "Il10", "Iigp1", "Lamb3", "Shcbp1", "Gata3", "Gstt1", "Ska3", "Wdr19", "Dcbld2", "Tgtp1", "Ccdc122", "Il7", "Prss23", "Cd209a", "Alpl", "Tpsb2", "Kifc3", "Plekhg3", "Hspa12a", "Zfhx3", "Xlr3a", "Slco4a1", "Ackr3", "Crmp1", "Apba1", "Dpp4", "Hba-a1")
+
+# 再次绘制火山图
+ggplot(data = DEG, aes(x = log2FoldChange, y = -log10(padj), color = change)) +
+  geom_point(alpha = 0.8, size = 3) +
+  labs(x = "log2 fold change", y = "-log10 padj") +
+  ggtitle(this_title) +
+  theme_bw(base_size = 20) +
+  theme(plot.title = element_text(size = 15, hjust = 0.5)) +
+  scale_color_manual(values = c('#a121f0', '#bebebe', '#ffad21')) -> p1
+
+# 设置 x 和 y 轴的范围
+p1 + xlim(NA, 10) + ylim(NA, 30) -> p2
+
+# 加载 ggrepel 库以便高亮显示某些基因
+library(ggrepel)
+
+# 在 DEG 数据框中添加一列以标记高亮基因
+DEG$highlight_genes <- ifelse(rownames(DEG) %in% highlight_genes, rownames(DEG), NA)
+
+# 打印修改后的 DEG 数据框
+print(DEG)
+p2
+```
+
+####增加显示的数量
+
+```{r}
+p3 <- p2 + geom_text_repel(aes(label = highlight_genes),color = "black", size = 6,family = "Arial",box.padding = unit(0.8, "lines"), point.padding = unit(0.3, "lines"), segment.size = 0.5,  max.overlaps = 20)
+p3
+```
+
+```{r}
+ggsave(filename = "volcano_OF-WT_YF-WT.pdf", plot = p3, width = 16, height = 16)
+```
+
+###male
+
+```{r}
+# 基础代码
+# 设置图形输出选项为 'cairo'
+options(bitmapType = 'cairo')
+
+# 加载 ggplot2 和 EnhancedVolcano 库
+library(ggplot2)
+library(EnhancedVolcano)
+
+
+# 读取差异基因分析结果的 CSV 文件，文件路径为 "/hdd/hlf/result/bulk/deg/gene/OF-WT_YF-WT/2-DEG_intersect_results.csv"
+deg<-read.csv("~/waibao_hezuo/OM-WT_YM-WT_2-DEG_intersect_results.csv",row.names=1)
+
+# 选择感兴趣的列并重命名
+deg <- deg[, c("log2FoldChange_DESeq2", "padj_DESeq2")]
+colnames(deg) <- c("log2FoldChange", "padj")
+
+# 将 deg 数据赋值给 DEG
+DEG <- deg
+
+# 设置 logFC 的阈值
+logFC_cutoff <- 1
+
+# 根据 logFC 和 padj 的值给基因分类
+DEG$change <- as.factor(ifelse(DEG$padj < 0.05 & abs(DEG$log2FoldChange) > logFC_cutoff,
+                               ifelse(DEG$log2FoldChange > logFC_cutoff, "UP", "DOWN"),
+                               "NOT"))
+
+# 生成图表标题
+this_title <- paste0('Cutoff for log2FC is ', round(logFC_cutoff, 3),
+                     '\nThe number of up gene is ', nrow(DEG[DEG$change == 'UP',]),
+                     '\nThe number of down gene is ', nrow(DEG[DEG$change == 'DOWN',]))
+
+# 删除缺失值
+DEG <- na.omit(DEG)
+
+
+# 绘制火山图
+ggplot(data = DEG, aes(x = log2FoldChange, y = -log10(padj), color = change)) +
+  geom_point(alpha = 0.8, size = 3) +
+  labs(x = "log2 fold change", y = "-log10 padj") +
+  ggtitle(this_title) +
+  theme_bw(base_size = 20) +
+  theme(plot.title = element_text(size = 15, hjust = 0.5)) +
+  scale_color_manual(values = c('#a121f0', '#bebebe', '#ffad21')) -> p1
+
+# 设置 x 和 y 轴的范围
+p1 + xlim(NA, 10) + ylim(NA, 30) -> p2
+
+# 加载 patchwork 库以合并图表
+library(patchwork)
+
+# 显示图表 p1 和 p2
+# 这里的p2是最后的结果，为了高亮某些基因，有了下面的一部分的代码
+p1 + p2
+p2
+```
+
+```{r}
+# 本部分代码只为高亮一部分基因
+# 高亮某些基因
+highlight_genes <- c("Sdcbp2", "Kcnk1", "Car2", "Zfp345", "Ctsf", "Il10", "Iigp1", "Lamb3", "Shcbp1", "Gata3", "Gstt1", "Ska3", "Wdr19", "Dcbld2", "Tgtp1", "Ccdc122", "Il7", "Prss23", "Cd209a", "Alpl", "Tpsb2", "Kifc3", "Plekhg3", "Hspa12a", "Zfhx3", "Xlr3a", "Slco4a1", "Ackr3", "Crmp1", "Apba1", "Dpp4", "Hba-a1")
+
+# 再次绘制火山图
+ggplot(data = DEG, aes(x = log2FoldChange, y = -log10(padj), color = change)) +
+  geom_point(alpha = 0.8, size = 3) +
+  labs(x = "log2 fold change", y = "-log10 padj") +
+  ggtitle(this_title) +
+  theme_bw(base_size = 20) +
+  theme(plot.title = element_text(size = 15, hjust = 0.5)) +
+  scale_color_manual(values = c('#a121f0', '#bebebe', '#ffad21')) -> p1
+
+# 设置 x 和 y 轴的范围
+p1 + xlim(NA, 10) + ylim(NA, 30) -> p2
+
+# 加载 ggrepel 库以便高亮显示某些基因
+library(ggrepel)
+
+# 在 DEG 数据框中添加一列以标记高亮基因
+DEG$highlight_genes <- ifelse(rownames(DEG) %in% highlight_genes, rownames(DEG), NA)
+
+# 打印修改后的 DEG 数据框
+print(DEG)
+p2
+```
+
+####增加显示的数量
+
+```{r}
+p3 <- p2 + geom_text_repel(aes(label = highlight_genes),color = "black", size = 6,family = "Arial",box.padding = unit(0.8, "lines"), point.padding = unit(0.3, "lines"), segment.size = 0.5,  max.overlaps = 20)
+
+p3
+```
+
+```{r}
+ggsave(filename = "volcano_OM-WT_YM-WT.pdf", plot = p3, width = 16, height = 16)
+```

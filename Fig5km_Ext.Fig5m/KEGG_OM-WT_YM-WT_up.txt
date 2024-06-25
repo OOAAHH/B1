@@ -1,0 +1,197 @@
+category	subcategory	ID	Description	GeneRatio	BgRatio	pvalue	p.adjust	qvalue	geneID	Count
+mmu04380	Organismal Systems	Development and regeneration	mmu04380	Osteoclast differentiation - Mus musculus (house mouse)	6/79	135/9468	0.000890909646228925	0.174618290660869	0.165052734459254	Fcgr2b/Socs3/Pira6/Csf1/Fcgr4/Fyn	6
+mmu04662	Organismal Systems	Immune system	mmu04662	B cell receptor signaling pathway - Mus musculus (house mouse)	4/79	83/9468	0.00501119290958054	0.315714078613655	0.298419322427515	Fcgr2b/Cd72/Pira6/Rasgrp3	4
+mmu05162	Human Diseases	Infectious disease: viral	mmu05162	Measles - Mus musculus (house mouse)	5/79	145/9468	0.00714904933746647	0.315714078613655	0.298419322427515	Fcgr2b/Cd3g/Il2rb/Slamf1/Oas1a	5
+mmu04640	Organismal Systems	Immune system	mmu04640	Hematopoietic cell lineage - Mus musculus (house mouse)	4/79	94/9468	0.00776315082614559	0.315714078613655	0.298419322427515	Cd59a/Cd3g/Cd8b1/Csf1	4
+mmu04061	Environmental Information Processing	Signaling molecules and interaction	mmu04061	Viral protein interaction with cytokine and cytokine receptor - Mus musculus (house mouse)	4/79	95/9468	0.00805393057687894	0.315714078613655	0.298419322427515	Cxcl13/Il2rb/Ccr9/Csf1	4
+mmu04010	Environmental Information Processing	Signal transduction	mmu04010	MAPK signaling pathway - Mus musculus (house mouse)	7/79	299/9468	0.0121557417418868	0.346256031734621	0.327288193261511	Ngfr/Hspb1/Cacna1d/Igf1r/Rasgrp3/Csf1/Stk3	7
+mmu00532	Metabolism	Glycan biosynthesis and metabolism	mmu00532	Glycosaminoglycan biosynthesis - chondroitin sulfate / dermatan sulfate - Mus musculus (house mouse)	2/79	21/9468	0.013027080599796	0.346256031734621	0.327288193261511	Chst7/Chst3	2
+mmu04725	Organismal Systems	Nervous system	mmu04725	Cholinergic synapse - Mus musculus (house mouse)	4/79	112/9468	0.0141328992544743	0.346256031734621	0.327288193261511	Gnb3/Creb5/Cacna1d/Fyn	4
+mmu04514	Environmental Information Processing	Signaling molecules and interaction	mmu04514	Cell adhesion molecules - Mus musculus (house mouse)	5/79	179/9468	0.0167035867841533	0.363767001077116	0.343839915089003	Spn/F11r/Ntng2/Cd8b1/Mag	5
+mmu04927	Organismal Systems	Endocrine system	mmu04927	Cortisol synthesis and secretion - Mus musculus (house mouse)	3/79	72/9468	0.0220889117455404	0.432942670212592	0.409226154443696	Cyp11a1/Creb5/Cacna1d	3
+mmu05135	Human Diseases	Infectious disease: bacterial	mmu05135	Yersinia infection - Mus musculus (house mouse)	4/79	135/9468	0.0261081697193595	0.465200114999497	0.439716542641845	Elmo1/Arhgef12/Cd8b1/Wipf3	4
+mmu04015	Environmental Information Processing	Signal transduction	mmu04015	Rap1 signaling pathway - Mus musculus (house mouse)	5/79	214/9468	0.0329418400572052	0.476795589493987	0.450676819285401	Ngfr/Igf1r/Rasgrp3/Rapgef3/Csf1	5
+mmu04060	Environmental Information Processing	Signaling molecules and interaction	mmu04060	Cytokine-cytokine receptor interaction - Mus musculus (house mouse)	6/79	294/9468	0.0357629014868865	0.476795589493987	0.450676819285401	Ngfr/Cxcl13/Il2rb/Ccr9/Tnfsf4/Csf1	6
+mmu05340	Human Diseases	Immune disease	mmu05340	Primary immunodeficiency - Mus musculus (house mouse)	2/79	36/9468	0.0360672536255999	0.476795589493987	0.450676819285401	Aicda/Cd8b1	2
+mmu05202	Human Diseases	Cancer: overview	mmu05202	Transcriptional misregulation in cancer - Mus musculus (house mouse)	5/79	224/9468	0.0389280429408536	0.476795589493987	0.450676819285401	Ngfr/Il2rb/Cdk14/Pbx3/Igf1r	5
+mmu04110	Cellular Processes	Cell growth and death	mmu04110	Cell cycle - Mus musculus (house mouse)	4/79	155/9468	0.0403377948350839	0.476795589493987	0.450676819285401	Mcm6/Ndc80/Ttk/Ccnb1	4
+mmu04520	Cellular Processes	Cellular community - eukaryotes	mmu04520	Adherens junction - Mus musculus (house mouse)	3/79	92/9468	0.0413547194969275	0.476795589493987	0.450676819285401	Fer/Igf1r/Fyn	3
+mmu04014	Environmental Information Processing	Signal transduction	mmu04014	Ras signaling pathway - Mus musculus (house mouse)	5/79	235/9468	0.0462389025349368	0.48813027774694	0.461390595507311	Gnb3/Ngfr/Igf1r/Rasgrp3/Csf1	5
+mmu00514	Metabolism	Glycan biosynthesis and metabolism	mmu00514	Other types of O-glycan biosynthesis - Mus musculus (house mouse)	2/79	43/9468	0.0498092120149938	0.48813027774694	0.461390595507311	B4galt3/Gxylt1	2
+mmu04672	Organismal Systems	Immune system	mmu04672	Intestinal immune network for IgA production - Mus musculus (house mouse)	2/79	43/9468	0.0498092120149938	0.48813027774694	0.461390595507311	Aicda/Ccr9	2
+mmu04925	Organismal Systems	Endocrine system	mmu04925	Aldosterone synthesis and secretion - Mus musculus (house mouse)	3/79	102/9468	0.0533345724694539	0.497789343048236	0.470520539078891	Cyp11a1/Creb5/Cacna1d	3
+mmu04930	Human Diseases	Endocrine and metabolic disease	mmu04930	Type II diabetes mellitus - Mus musculus (house mouse)	2/79	48/9468	0.0605954975129449	0.539850796024418	0.51027787379322	Socs3/Cacna1d	2
+mmu04668	Environmental Information Processing	Signal transduction	mmu04668	TNF signaling pathway - Mus musculus (house mouse)	3/79	114/9468	0.0696602108749503	0.593626144847403	0.561107419404634	Socs3/Creb5/Csf1	3
+mmu04935	Organismal Systems	Endocrine system	mmu04935	Growth hormone synthesis, secretion and action - Mus musculus (house mouse)	3/79	117/9468	0.0740581158964239	0.594771491195922	0.562190023901623	Socs3/Creb5/Cacna1d	3
+mmu04062	Organismal Systems	Immune system	mmu04062	Chemokine signaling pathway - Mus musculus (house mouse)	4/79	192/9468	0.0762940175217594	0.594771491195922	0.562190023901623	Gnb3/Elmo1/Cxcl13/Ccr9	4
+mmu04660	Organismal Systems	Immune system	mmu04660	T cell receptor signaling pathway - Mus musculus (house mouse)	3/79	122/9468	0.0816565477687556	0.594771491195922	0.562190023901623	Cd3g/Cd8b1/Fyn	3
+mmu04151	Environmental Information Processing	Signal transduction	mmu04151	PI3K-Akt signaling pathway - Mus musculus (house mouse)	6/79	364/9468	0.0828685390260702	0.594771491195922	0.562190023901623	Gnb3/Ngfr/Creb5/Il2rb/Igf1r/Csf1	6
+mmu05034	Human Diseases	Substance dependence	mmu05034	Alcoholism - Mus musculus (house mouse)	4/79	205/9468	0.0918011554101696	0.594771491195922	0.562190023901623	Gnb3/Creb5/Hdac9/Camkk1	4
+mmu04726	Organismal Systems	Nervous system	mmu04726	Serotonergic synapse - Mus musculus (house mouse)	3/79	131/9468	0.096142752205213	0.594771491195922	0.562190023901623	Gnb3/Cacna1d/Rapgef3	3
+mmu04913	Organismal Systems	Endocrine system	mmu04913	Ovarian steroidogenesis - Mus musculus (house mouse)	2/79	63/9468	0.0969598303435845	0.594771491195922	0.562190023901623	Cyp11a1/Igf1r	2
+mmu04915	Organismal Systems	Endocrine system	mmu04915	Estrogen signaling pathway - Mus musculus (house mouse)	3/79	133/9468	0.0994968325833793	0.594771491195922	0.562190023901623	Esr1/Creb5/Oprm1	3
+mmu00230	Metabolism	Nucleotide metabolism	mmu00230	Purine metabolism - Mus musculus (house mouse)	3/79	134/9468	0.101191604297605	0.594771491195922	0.562190023901623	Nt5e/Lacc1/Hddc3	3
+mmu04728	Organismal Systems	Nervous system	mmu04728	Dopaminergic synapse - Mus musculus (house mouse)	3/79	135/9468	0.102898045992565	0.594771491195922	0.562190023901623	Gnb3/Creb5/Cacna1d	3
+mmu00533	Metabolism	Glycan biosynthesis and metabolism	mmu00533	Glycosaminoglycan biosynthesis - keratan sulfate - Mus musculus (house mouse)	1/79	14/9468	0.110757723123492	0.594771491195922	0.562190023901623	B4galt3	1
+mmu04550	Cellular Processes	Cellular community - eukaryotes	mmu04550	Signaling pathways regulating pluripotency of stem cells - Mus musculus (house mouse)	3/79	140/9468	0.111601297643138	0.594771491195922	0.562190023901623	Id3/Lefty1/Igf1r	3
+mmu05031	Human Diseases	Substance dependence	mmu05031	Amphetamine addiction - Mus musculus (house mouse)	2/79	69/9468	0.112880484446878	0.594771491195922	0.562190023901623	Creb5/Cacna1d	2
+mmu00604	Metabolism	Glycan biosynthesis and metabolism	mmu00604	Glycosphingolipid biosynthesis - ganglio series - Mus musculus (house mouse)	1/79	15/9468	0.11818845507539	0.594771491195922	0.562190023901623	St6galnac3	1
+mmu00982	Metabolism	Xenobiotics biodegradation and metabolism	mmu00982	Drug metabolism - cytochrome P450 - Mus musculus (house mouse)	2/79	71/9468	0.118330553871728	0.594771491195922	0.562190023901623	Fmo5/Gstm1	2
+mmu05207	Human Diseases	Cancer: overview	mmu05207	Chemical carcinogenesis - receptor activation - Mus musculus (house mouse)	4/79	225/9468	0.118347388554291	0.594771491195922	0.562190023901623	Esr1/Creb5/Cacna1d/Gstm1	4
+mmu04120	Genetic Information Processing	Folding, sorting and degradation	mmu04120	Ubiquitin mediated proteolysis - Mus musculus (house mouse)	3/79	148/9468	0.126091274231957	0.605338936330133	0.572178586434497	Socs3/Mid1/Herc3	3
+mmu04917	Organismal Systems	Endocrine system	mmu04917	Prolactin signaling pathway - Mus musculus (house mouse)	2/79	74/9468	0.126627022395589	0.605338936330133	0.572178586434497	Socs3/Esr1	2
+mmu04261	Organismal Systems	Circulatory system	mmu04261	Adrenergic signaling in cardiomyocytes - Mus musculus (house mouse)	3/79	156/9468	0.141223558326828	0.620814082775803	0.586806007349846	Creb5/Cacna1d/Rapgef3	3
+mmu04934	Human Diseases	Endocrine and metabolic disease	mmu04934	Cushing syndrome - Mus musculus (house mouse)	3/79	162/9468	0.152957601187325	0.620814082775803	0.586806007349846	Cyp11a1/Creb5/Cacna1d	3
+mmu01232	Metabolism	Global and overview maps	mmu01232	Nucleotide metabolism - Mus musculus (house mouse)	2/79	84/9468	0.155192281837005	0.620814082775803	0.586806007349846	Nt5e/Lacc1	2
+mmu04911	Organismal Systems	Endocrine system	mmu04911	Insulin secretion - Mus musculus (house mouse)	2/79	86/9468	0.161048796457371	0.620814082775803	0.586806007349846	Creb5/Cacna1d	2
+mmu04658	Organismal Systems	Immune system	mmu04658	Th1 and Th2 cell differentiation - Mus musculus (house mouse)	2/79	88/9468	0.166945927413653	0.620814082775803	0.586806007349846	Cd3g/Il2rb	2
+mmu00430	Metabolism	Metabolism of other amino acids	mmu00430	Taurine and hypotaurine metabolism - Mus musculus (house mouse)	1/79	22/9468	0.168514490876968	0.620814082775803	0.586806007349846	Fmo5	1
+mmu04727	Organismal Systems	Nervous system	mmu04727	GABAergic synapse - Mus musculus (house mouse)	2/79	89/9468	0.16990881015483	0.620814082775803	0.586806007349846	Gnb3/Cacna1d	2
+mmu04211	Organismal Systems	Aging	mmu04211	Longevity regulating pathway - Mus musculus (house mouse)	2/79	90/9468	0.172880760835268	0.620814082775803	0.586806007349846	Creb5/Igf1r	2
+mmu00515	Metabolism	Glycan biosynthesis and metabolism	mmu00515	Mannose type O-glycan biosynthesis - Mus musculus (house mouse)	1/79	23/9468	0.17546847724376	0.620814082775803	0.586806007349846	B4galt3	1
+mmu05032	Human Diseases	Substance dependence	mmu05032	Morphine addiction - Mus musculus (house mouse)	2/79	91/9468	0.175861428229297	0.620814082775803	0.586806007349846	Gnb3/Oprm1	2
+mmu04914	Organismal Systems	Endocrine system	mmu04914	Progesterone-mediated oocyte maturation - Mus musculus (house mouse)	2/79	92/9468	0.178850466201127	0.620814082775803	0.586806007349846	Igf1r/Ccnb1	2
+mmu01522	Human Diseases	Drug resistance: antineoplastic	mmu01522	Endocrine resistance - Mus musculus (house mouse)	2/79	93/9468	0.181847533646188	0.620814082775803	0.586806007349846	Esr1/Igf1r	2
+mmu04666	Organismal Systems	Immune system	mmu04666	Fc gamma R-mediated phagocytosis - Mus musculus (house mouse)	2/79	93/9468	0.181847533646188	0.620814082775803	0.586806007349846	Fcgr2b/Fcgr4	2
+mmu00534	Metabolism	Glycan biosynthesis and metabolism	mmu00534	Glycosaminoglycan biosynthesis - heparan sulfate / heparin - Mus musculus (house mouse)	1/79	24/9468	0.182365035242463	0.620814082775803	0.586806007349846	Hs3st1	1
+mmu04144	Cellular Processes	Transport and catabolism	mmu04144	Endocytosis - Mus musculus (house mouse)	4/79	268/9468	0.184921703127814	0.620814082775803	0.586806007349846	Il2rb/Wipf3/Igf1r/Ehd2	4
+mmu05020	Human Diseases	Neurodegenerative disease	mmu05020	Prion disease - Mus musculus (house mouse)	4/79	268/9468	0.184921703127814	0.620814082775803	0.586806007349846	Prnp/Creb5/Cacna1d/Fyn	4
+mmu05152	Human Diseases	Infectious disease: bacterial	mmu05152	Tuberculosis - Mus musculus (house mouse)	3/79	180/9468	0.189864381068459	0.620814082775803	0.586806007349846	Fcgr2b/Arhgef12/Fcgr4	3
+mmu04360	Organismal Systems	Development and regeneration	mmu04360	Axon guidance - Mus musculus (house mouse)	3/79	181/9468	0.191980391234854	0.620814082775803	0.586806007349846	Ntng2/Arhgef12/Fyn	3
+mmu00790	Metabolism	Metabolism of cofactors and vitamins	mmu00790	Folate biosynthesis - Mus musculus (house mouse)	1/79	26/9468	0.195987735295695	0.620814082775803	0.586806007349846	Ggh	1
+mmu04713	Organismal Systems	Environmental adaptation	mmu04713	Circadian entrainment - Mus musculus (house mouse)	2/79	98/9468	0.196941719230606	0.620814082775803	0.586806007349846	Gnb3/Cacna1d	2
+mmu05215	Human Diseases	Cancer: specific types	mmu05215	Prostate cancer - Mus musculus (house mouse)	2/79	99/9468	0.199980074827516	0.620814082775803	0.586806007349846	Creb5/Igf1r	2
+mmu00601	Metabolism	Glycan biosynthesis and metabolism	mmu00601	Glycosphingolipid biosynthesis - lacto and neolacto series - Mus musculus (house mouse)	1/79	27/9468	0.202714802539038	0.620814082775803	0.586806007349846	B4galt3	1
+mmu04392	Environmental Information Processing	Signal transduction	mmu04392	Hippo signaling pathway - multiple species - Mus musculus (house mouse)	1/79	27/9468	0.202714802539038	0.620814082775803	0.586806007349846	Stk3	1
+mmu01523	Human Diseases	Drug resistance: antineoplastic	mmu01523	Antifolate resistance - Mus musculus (house mouse)	1/79	29/9468	0.216002656570164	0.640283578087103	0.605208967472234	Ggh	1
+mmu04659	Organismal Systems	Immune system	mmu04659	Th17 cell differentiation - Mus musculus (house mouse)	2/79	105/9468	0.218321098600299	0.640283578087103	0.605208967472234	Cd3g/Il2rb	2
+mmu05146	Human Diseases	Infectious disease: parasitic	mmu05146	Amoebiasis - Mus musculus (house mouse)	2/79	107/9468	0.224470041838616	0.640283578087103	0.605208967472234	Hspb1/Serpinb9	2
+mmu04928	Organismal Systems	Endocrine system	mmu04928	Parathyroid hormone synthesis, secretion and action - Mus musculus (house mouse)	2/79	108/9468	0.227549867443495	0.640283578087103	0.605208967472234	Creb5/Slc34a1	2
+mmu04350	Environmental Information Processing	Signal transduction	mmu04350	TGF-beta signaling pathway - Mus musculus (house mouse)	2/79	110/9468	0.23371888604275	0.640283578087103	0.605208967472234	Id3/Lefty1	2
+mmu04931	Human Diseases	Endocrine and metabolic disease	mmu04931	Insulin resistance - Mus musculus (house mouse)	2/79	110/9468	0.23371888604275	0.640283578087103	0.605208967472234	Socs3/Creb5	2
+mmu00512	Metabolism	Glycan biosynthesis and metabolism	mmu00512	Mucin type O-glycan biosynthesis - Mus musculus (house mouse)	1/79	32/9468	0.235525481953805	0.640283578087103	0.605208967472234	St6galnac3	1
+mmu04215	Cellular Processes	Cell growth and death	mmu04215	Apoptosis - multiple species - Mus musculus (house mouse)	1/79	32/9468	0.235525481953805	0.640283578087103	0.605208967472234	Ngfr	1
+mmu05205	Human Diseases	Cancer: overview	mmu05205	Proteoglycans in cancer - Mus musculus (house mouse)	3/79	203/9468	0.239884498768195	0.640283578087103	0.605208967472234	Esr1/Arhgef12/Igf1r	3
+mmu04066	Environmental Information Processing	Signal transduction	mmu04066	HIF-1 signaling pathway - Mus musculus (house mouse)	2/79	114/9468	0.246087142789828	0.640283578087103	0.605208967472234	Aldoc/Igf1r	2
+mmu04724	Organismal Systems	Nervous system	mmu04724	Glutamatergic synapse - Mus musculus (house mouse)	2/79	114/9468	0.246087142789828	0.640283578087103	0.605208967472234	Gnb3/Cacna1d	2
+mmu00030	Metabolism	Carbohydrate metabolism	mmu00030	Pentose phosphate pathway - Mus musculus (house mouse)	1/79	34/9468	0.248273224156223	0.640283578087103	0.605208967472234	Aldoc	1
+mmu03030	Genetic Information Processing	Replication and repair	mmu03030	DNA replication - Mus musculus (house mouse)	1/79	35/9468	0.2545681589974	0.647991677447928	0.612494818640361	Mcm6	1
+mmu00051	Metabolism	Carbohydrate metabolism	mmu00051	Fructose and mannose metabolism - Mus musculus (house mouse)	1/79	36/9468	0.260811042008023	0.648992573515643	0.613440885815001	Aldoc	1
+mmu04670	Organismal Systems	Immune system	mmu04670	Leukocyte transendothelial migration - Mus musculus (house mouse)	2/79	119/9468	0.261583741365999	0.648992573515643	0.613440885815001	F11r/Rapgef3	2
+mmu04114	Cellular Processes	Cell growth and death	mmu04114	Oocyte meiosis - Mus musculus (house mouse)	2/79	121/9468	0.267787644162271	0.650674140591184	0.615030336971259	Igf1r/Ccnb1	2
+mmu04650	Organismal Systems	Immune system	mmu04650	Natural killer cell mediated cytotoxicity - Mus musculus (house mouse)	2/79	122/9468	0.270889829102163	0.650674140591184	0.615030336971259	Fcgr4/Fyn	2
+mmu01250	Metabolism	Global and overview maps	mmu01250	Biosynthesis of nucleotide sugars - Mus musculus (house mouse)	1/79	38/9468	0.273142348854963	0.650674140591184	0.615030336971259	Uap1	1
+mmu04611	Organismal Systems	Immune system	mmu04611	Platelet activation - Mus musculus (house mouse)	2/79	125/9468	0.280194752693152	0.650674140591184	0.615030336971259	Arhgef12/Fyn	2
+mmu04216	Cellular Processes	Cell growth and death	mmu04216	Ferroptosis - Mus musculus (house mouse)	1/79	40/9468	0.2852705032514	0.650674140591184	0.615030336971259	Prnp	1
+mmu04152	Environmental Information Processing	Signal transduction	mmu04152	AMPK signaling pathway - Mus musculus (house mouse)	2/79	127/9468	0.286394606946967	0.650674140591184	0.615030336971259	Creb5/Igf1r	2
+mmu04024	Environmental Information Processing	Signal transduction	mmu04024	cAMP signaling pathway - Mus musculus (house mouse)	3/79	224/9468	0.287309555975014	0.650674140591184	0.615030336971259	Creb5/Cacna1d/Rapgef3	3
+mmu05150	Human Diseases	Infectious disease: bacterial	mmu05150	Staphylococcus aureus infection - Mus musculus (house mouse)	2/79	128/9468	0.289492902730204	0.650674140591184	0.615030336971259	Fcgr2b/Fcgr4	2
+mmu04926	Organismal Systems	Endocrine system	mmu04926	Relaxin signaling pathway - Mus musculus (house mouse)	2/79	129/9468	0.292589850724217	0.650674140591184	0.615030336971259	Gnb3/Creb5	2
+mmu00760	Metabolism	Metabolism of cofactors and vitamins	mmu00760	Nicotinate and nicotinamide metabolism - Mus musculus (house mouse)	1/79	42/9468	0.297198809828416	0.650674140591184	0.615030336971259	Nt5e	1
+mmu04068	Environmental Information Processing	Signal transduction	mmu04068	FoxO signaling pathway - Mus musculus (house mouse)	2/79	131/9468	0.298778942108197	0.650674140591184	0.615030336971259	Igf1r/Ccnb1	2
+mmu00513	Metabolism	Glycan biosynthesis and metabolism	mmu00513	Various types of N-glycan biosynthesis - Mus musculus (house mouse)	1/79	43/9468	0.303089038347783	0.652807159518302	0.617046509533948	B4galt3	1
+mmu04962	Organismal Systems	Excretory system	mmu04962	Vasopressin-regulated water reabsorption - Mus musculus (house mouse)	1/79	44/9468	0.308930520148369	0.655720644748272	0.619800394606315	Creb5	1
+mmu04142	Cellular Processes	Transport and catabolism	mmu04142	Lysosome - Mus musculus (house mouse)	2/79	135/9468	0.311132754906068	0.655720644748272	0.619800394606315	Ap4s1/Laptm4b	2
+mmu05170	Human Diseases	Infectious disease: viral	mmu05170	Human immunodeficiency virus 1 infection - Mus musculus (house mouse)	3/79	237/9468	0.317086067063478	0.661158182387678	0.62494006498513	Gnb3/Cd3g/Ccnb1	3
+mmu04973	Organismal Systems	Digestive system	mmu04973	Carbohydrate digestion and absorption - Mus musculus (house mouse)	1/79	48/9468	0.3318168979569	0.672748556950325	0.635895521070125	Cacna1d	1
+mmu05030	Human Diseases	Substance dependence	mmu05030	Cocaine addiction - Mus musculus (house mouse)	1/79	48/9468	0.3318168979569	0.672748556950325	0.635895521070125	Creb5	1
+mmu04270	Organismal Systems	Circulatory system	mmu04270	Vascular smooth muscle contraction - Mus musculus (house mouse)	2/79	144/9468	0.338759764597368	0.672748556950325	0.635895521070125	Cacna1d/Arhgef12	2
+mmu05166	Human Diseases	Infectious disease: viral	mmu05166	Human T-cell leukemia virus 1 infection - Mus musculus (house mouse)	3/79	247/9468	0.340056402765382	0.672748556950325	0.635895521070125	Cd3g/Creb5/Il2rb	3
+mmu05224	Human Diseases	Cancer: specific types	mmu05224	Breast cancer - Mus musculus (house mouse)	2/79	147/9468	0.347901500022938	0.672748556950325	0.635895521070125	Esr1/Igf1r	2
+mmu00520	Metabolism	Carbohydrate metabolism	mmu00520	Amino sugar and nucleotide sugar metabolism - Mus musculus (house mouse)	1/79	51/9468	0.348489039543789	0.672748556950325	0.635895521070125	Uap1	1
+mmu05163	Human Diseases	Infectious disease: viral	mmu05163	Human cytomegalovirus infection - Mus musculus (house mouse)	3/79	253/9468	0.35382768226461	0.672748556950325	0.635895521070125	Gnb3/Creb5/Arhgef12	3
+mmu04072	Environmental Information Processing	Signal transduction	mmu04072	Phospholipase D signaling pathway - Mus musculus (house mouse)	2/79	149/9468	0.353973888324935	0.672748556950325	0.635895521070125	Rapgef3/Fyn	2
+mmu04723	Organismal Systems	Nervous system	mmu04723	Retrograde endocannabinoid signaling - Mus musculus (house mouse)	2/79	149/9468	0.353973888324935	0.672748556950325	0.635895521070125	Gnb3/Cacna1d	2
+mmu00510	Metabolism	Glycan biosynthesis and metabolism	mmu00510	N-Glycan biosynthesis - Mus musculus (house mouse)	1/79	53/9468	0.359374923715459	0.672748556950325	0.635895521070125	B4galt3	1
+mmu04978	Organismal Systems	Digestive system	mmu04978	Mineral absorption - Mus musculus (house mouse)	1/79	54/9468	0.364750322656136	0.672748556950325	0.635895521070125	Slc34a1	1
+mmu00270	Metabolism	Amino acid metabolism	mmu00270	Cysteine and methionine metabolism - Mus musculus (house mouse)	1/79	55/9468	0.370081183555878	0.672748556950325	0.635895521070125	Lacc1	1
+mmu00600	Metabolism	Lipid metabolism	mmu00600	Sphingolipid metabolism - Mus musculus (house mouse)	1/79	55/9468	0.370081183555878	0.672748556950325	0.635895521070125	Cerk	1
+mmu00240	Metabolism	Nucleotide metabolism	mmu00240	Pyrimidine metabolism - Mus musculus (house mouse)	1/79	56/9468	0.375367870743712	0.672748556950325	0.635895521070125	Nt5e	1
+mmu04370	Environmental Information Processing	Signal transduction	mmu04370	VEGF signaling pathway - Mus musculus (house mouse)	1/79	58/9468	0.385810166613805	0.672748556950325	0.635895521070125	Hspb1	1
+mmu04148	NA	NA	mmu04148	Efferocytosis - Mus musculus (house mouse)	2/79	161/9468	0.389975116966249	0.672748556950325	0.635895521070125	Elmo1/Ano7	2
+mmu04730	Organismal Systems	Nervous system	mmu04730	Long-term depression - Mus musculus (house mouse)	1/79	60/9468	0.396080066481704	0.672748556950325	0.635895521070125	Igf1r	1
+mmu04213	Organismal Systems	Aging	mmu04213	Longevity regulating pathway - multiple species - Mus musculus (house mouse)	1/79	61/9468	0.401151247896239	0.672748556950325	0.635895521070125	Igf1r	1
+mmu04961	Organismal Systems	Excretory system	mmu04961	Endocrine and other factor-regulated calcium reabsorption - Mus musculus (house mouse)	1/79	61/9468	0.401151247896239	0.672748556950325	0.635895521070125	Esr1	1
+mmu05160	Human Diseases	Infectious disease: viral	mmu05160	Hepatitis C - Mus musculus (house mouse)	2/79	166/9468	0.40472505893138	0.672748556950325	0.635895521070125	Socs3/Oas1a	2
+mmu04530	Cellular Processes	Cellular community - eukaryotes	mmu04530	Tight junction - Mus musculus (house mouse)	2/79	168/9468	0.410579104006155	0.672748556950325	0.635895521070125	F11r/Cacna1d	2
+mmu04929	Organismal Systems	Endocrine system	mmu04929	GnRH secretion - Mus musculus (house mouse)	1/79	63/9468	0.41116780883771	0.672748556950325	0.635895521070125	Cacna1d	1
+mmu00310	Metabolism	Amino acid metabolism	mmu00310	Lysine degradation - Mus musculus (house mouse)	1/79	64/9468	0.416113874026634	0.672748556950325	0.635895521070125	Hykk	1
+mmu04630	Environmental Information Processing	Signal transduction	mmu04630	JAK-STAT signaling pathway - Mus musculus (house mouse)	2/79	171/9468	0.419308617613384	0.672748556950325	0.635895521070125	Socs3/Il2rb	2
+mmu04022	Environmental Information Processing	Signal transduction	mmu04022	cGMP-PKG signaling pathway - Mus musculus (house mouse)	2/79	172/9468	0.422204354736196	0.672748556950325	0.635895521070125	Creb5/Cacna1d	2
+mmu05164	Human Diseases	Infectious disease: viral	mmu05164	Influenza A - Mus musculus (house mouse)	2/79	173/9468	0.425092899952181	0.672748556950325	0.635895521070125	Socs3/Oas1a	2
+mmu04664	Organismal Systems	Immune system	mmu04664	Fc epsilon RI signaling pathway - Mus musculus (house mouse)	1/79	66/9468	0.425883267266824	0.672748556950325	0.635895521070125	Fyn	1
+mmu05225	Human Diseases	Cancer: specific types	mmu05225	Hepatocellular carcinoma - Mus musculus (house mouse)	2/79	174/9468	0.427974171137969	0.672748556950325	0.635895521070125	Igf1r/Gstm1	2
+mmu00010	Metabolism	Carbohydrate metabolism	mmu00010	Glycolysis / Gluconeogenesis - Mus musculus (house mouse)	1/79	67/9468	0.430707264489321	0.672748556950325	0.635895521070125	Aldoc	1
+mmu04720	Organismal Systems	Nervous system	mmu04720	Long-term potentiation - Mus musculus (house mouse)	1/79	67/9468	0.430707264489321	0.672748556950325	0.635895521070125	Rapgef3	1
+mmu04145	Cellular Processes	Transport and catabolism	mmu04145	Phagosome - Mus musculus (house mouse)	2/79	179/9468	0.442268669072426	0.672748556950325	0.635895521070125	Fcgr2b/Fcgr4	2
+mmu05140	Human Diseases	Infectious disease: parasitic	mmu05140	Leishmaniasis - Mus musculus (house mouse)	1/79	70/9468	0.4449404170208	0.672748556950325	0.635895521070125	Fcgr4	1
+mmu04218	Cellular Processes	Cell growth and death	mmu04218	Cellular senescence - Mus musculus (house mouse)	2/79	181/9468	0.447932876566231	0.672748556950325	0.635895521070125	Cacna1d/Ccnb1	2
+mmu00480	Metabolism	Metabolism of other amino acids	mmu00480	Glutathione metabolism - Mus musculus (house mouse)	1/79	72/9468	0.454233398365451	0.672748556950325	0.635895521070125	Gstm1	1
+mmu00562	Metabolism	Carbohydrate metabolism	mmu00562	Inositol phosphate metabolism - Mus musculus (house mouse)	1/79	72/9468	0.454233398365451	0.672748556950325	0.635895521070125	Pik3c2b	1
+mmu04920	Organismal Systems	Endocrine system	mmu04920	Adipocytokine signaling pathway - Mus musculus (house mouse)	1/79	72/9468	0.454233398365451	0.672748556950325	0.635895521070125	Socs3	1
+mmu05218	Human Diseases	Cancer: specific types	mmu05218	Melanoma - Mus musculus (house mouse)	1/79	72/9468	0.454233398365451	0.672748556950325	0.635895521070125	Igf1r	1
+mmu00980	Metabolism	Xenobiotics biodegradation and metabolism	mmu00980	Metabolism of xenobiotics by cytochrome P450 - Mus musculus (house mouse)	1/79	74/9468	0.46337273055252	0.672748556950325	0.635895521070125	Gstm1	1
+mmu04115	Cellular Processes	Cell growth and death	mmu04115	p53 signaling pathway - Mus musculus (house mouse)	1/79	74/9468	0.46337273055252	0.672748556950325	0.635895521070125	Ccnb1	1
+mmu04918	Organismal Systems	Endocrine system	mmu04918	Thyroid hormone synthesis - Mus musculus (house mouse)	1/79	74/9468	0.46337273055252	0.672748556950325	0.635895521070125	Creb5	1
+mmu05214	Human Diseases	Cancer: specific types	mmu05214	Glioma - Mus musculus (house mouse)	1/79	74/9468	0.46337273055252	0.672748556950325	0.635895521070125	Igf1r	1
+mmu04924	Organismal Systems	Endocrine system	mmu04924	Renin secretion - Mus musculus (house mouse)	1/79	76/9468	0.472360921963514	0.675786428502546	0.638766978606058	Cacna1d	1
+mmu05100	Human Diseases	Infectious disease: bacterial	mmu05100	Bacterial invasion of epithelial cells - Mus musculus (house mouse)	1/79	76/9468	0.472360921963514	0.675786428502546	0.638766978606058	Elmo1	1
+mmu05133	Human Diseases	Infectious disease: bacterial	mmu05133	Pertussis - Mus musculus (house mouse)	1/79	77/9468	0.476799112675278	0.67719294264025	0.640096444171235	Irf8	1
+mmu01230	Metabolism	Global and overview maps	mmu01230	Biosynthesis of amino acids - Mus musculus (house mouse)	1/79	79/9468	0.485565207879441	0.679791291031218	0.642552455539712	Aldoc	1
+mmu01521	Human Diseases	Drug resistance: antineoplastic	mmu01521	EGFR tyrosine kinase inhibitor resistance - Mus musculus (house mouse)	1/79	79/9468	0.485565207879441	0.679791291031218	0.642552455539712	Igf1r	1
+mmu01524	Human Diseases	Drug resistance: antineoplastic	mmu01524	Platinum drug resistance - Mus musculus (house mouse)	1/79	80/9468	0.48989371449117	0.680987007377797	0.643682670776006	Gstm1	1
+mmu04510	Cellular Processes	Cellular community - eukaryotes	mmu04510	Focal adhesion - Mus musculus (house mouse)	2/79	202/9468	0.505416767764603	0.688304078497623	0.650598914154573	Igf1r/Fyn	2
+mmu05204	Human Diseases	Cancer: overview	mmu05204	Chemical carcinogenesis - DNA adducts - Mus musculus (house mouse)	1/79	84/9468	0.506851045965071	0.688304078497623	0.650598914154573	Gstm1	1
+mmu05412	Human Diseases	Cardiovascular disease	mmu05412	Arrhythmogenic right ventricular cardiomyopathy - Mus musculus (house mouse)	1/79	86/9468	0.515119766569722	0.688304078497623	0.650598914154573	Cacna1d	1
+mmu04260	Organismal Systems	Circulatory system	mmu04260	Cardiac muscle contraction - Mus musculus (house mouse)	1/79	87/9468	0.519202642123015	0.688304078497623	0.650598914154573	Cacna1d	1
+mmu04612	Organismal Systems	Immune system	mmu04612	Antigen processing and presentation - Mus musculus (house mouse)	1/79	87/9468	0.519202642123015	0.688304078497623	0.650598914154573	Cd8b1	1
+mmu05323	Human Diseases	Immune disease	mmu05323	Rheumatoid arthritis - Mus musculus (house mouse)	1/79	87/9468	0.519202642123015	0.688304078497623	0.650598914154573	Csf1	1
+mmu04613	Organismal Systems	Immune system	mmu04613	Neutrophil extracellular trap formation - Mus musculus (house mouse)	2/79	208/9468	0.521133941723376	0.688304078497623	0.650598914154573	Hdac9/Fcgr4	2
+mmu05235	Human Diseases	Cancer: overview	mmu05235	PD-L1 expression and PD-1 checkpoint pathway in cancer - Mus musculus (house mouse)	1/79	88/9468	0.523251569878295	0.688304078497623	0.650598914154573	Cd3g	1
+mmu00983	Metabolism	Xenobiotics biodegradation and metabolism	mmu00983	Drug metabolism - other enzymes - Mus musculus (house mouse)	1/79	90/9468	0.531248694440462	0.689567841790269	0.651793448738385	Gstm1	1
+mmu04912	Organismal Systems	Endocrine system	mmu04912	GnRH signaling pathway - Mus musculus (house mouse)	1/79	90/9468	0.531248694440462	0.689567841790269	0.651793448738385	Cacna1d	1
+mmu04742	Organismal Systems	Sensory system	mmu04742	Taste transduction - Mus musculus (house mouse)	1/79	92/9468	0.539113342674036	0.690979126730901	0.653127423762828	Gnb3	1
+mmu00140	Metabolism	Lipid metabolism	mmu00140	Steroid hormone biosynthesis - Mus musculus (house mouse)	1/79	94/9468	0.546847681440607	0.690979126730901	0.653127423762828	Cyp11a1	1
+mmu04610	Organismal Systems	Immune system	mmu04610	Complement and coagulation cascades - Mus musculus (house mouse)	1/79	94/9468	0.546847681440607	0.690979126730901	0.653127423762828	Cd59a	1
+mmu05416	Human Diseases	Cardiovascular disease	mmu05416	Viral myocarditis - Mus musculus (house mouse)	1/79	94/9468	0.546847681440607	0.690979126730901	0.653127423762828	Fyn	1
+mmu04070	Environmental Information Processing	Signal transduction	mmu04070	Phosphatidylinositol signaling system - Mus musculus (house mouse)	1/79	96/9468	0.554453842612144	0.690979126730901	0.653127423762828	Pik3c2b	1
+mmu05022	Human Diseases	Neurodegenerative disease	mmu05022	Pathways of neurodegeneration - multiple diseases - Mus musculus (house mouse)	4/79	473/9468	0.561615513458953	0.690979126730901	0.653127423762828	Prnp/Lrrk2/Cacna1d/Csf1	4
+mmu00564	Metabolism	Lipid metabolism	mmu00564	Glycerophospholipid metabolism - Mus musculus (house mouse)	1/79	98/9468	0.561933923628671	0.690979126730901	0.653127423762828	Pgs1	1
+mmu05231	Human Diseases	Cancer: overview	mmu05231	Choline metabolism in cancer - Mus musculus (house mouse)	1/79	98/9468	0.561933923628671	0.690979126730901	0.653127423762828	Slc44a4	1
+mmu05203	Human Diseases	Cancer: overview	mmu05203	Viral carcinogenesis - Mus musculus (house mouse)	2/79	226/9468	0.566287194295829	0.690979126730901	0.653127423762828	Creb5/Hdac9	2
+mmu05410	Human Diseases	Cardiovascular disease	mmu05410	Hypertrophic cardiomyopathy - Mus musculus (house mouse)	1/79	100/9468	0.569289988047183	0.690979126730901	0.653127423762828	Cacna1d	1
+mmu05169	Human Diseases	Infectious disease: viral	mmu05169	Epstein-Barr virus infection - Mus musculus (house mouse)	2/79	228/9468	0.571115400665337	0.690979126730901	0.653127423762828	Cd3g/Oas1a	2
+mmu05142	Human Diseases	Infectious disease: parasitic	mmu05142	Chagas disease - Mus musculus (house mouse)	1/79	103/9468	0.580095985661197	0.693285446278016	0.655307403571057	Cd3g	1
+mmu05414	Human Diseases	Cardiovascular disease	mmu05414	Dilated cardiomyopathy - Mus musculus (house mouse)	1/79	103/9468	0.580095985661197	0.693285446278016	0.655307403571057	Cacna1d	1
+mmu04922	Organismal Systems	Endocrine system	mmu04922	Glucagon signaling pathway - Mus musculus (house mouse)	1/79	104/9468	0.583638155136132	0.693291384282921	0.655313016293201	Creb5	1
+mmu04625	Organismal Systems	Immune system	mmu04625	C-type lectin receptor signaling pathway - Mus musculus (house mouse)	1/79	112/9468	0.610933450309434	0.72134311000391	0.681828073902729	Arhgef12	1
+mmu05132	Human Diseases	Infectious disease: bacterial	mmu05132	Salmonella infection - Mus musculus (house mouse)	2/79	251/9468	0.62388100799515	0.731705127515945	0.691622462098852	Pik3c2b/Elmo1	2
+mmu05010	Human Diseases	Neurodegenerative disease	mmu05010	Alzheimer disease - Mus musculus (house mouse)	3/79	384/9468	0.627175823585095	0.731705127515945	0.691622462098852	Apbb1/Cacna1d/Csf1	3
+mmu04919	Organismal Systems	Endocrine system	mmu04919	Thyroid hormone signaling pathway - Mus musculus (house mouse)	1/79	120/9468	0.636460532060172	0.733031754390021	0.692876416609257	Esr1	1
+mmu01200	Metabolism	Global and overview maps	mmu01200	Carbon metabolism - Mus musculus (house mouse)	1/79	121/9468	0.639532806125987	0.733031754390021	0.692876416609257	Aldoc	1
+mmu04722	Organismal Systems	Nervous system	mmu04722	Neurotrophin signaling pathway - Mus musculus (house mouse)	1/79	121/9468	0.639532806125987	0.733031754390021	0.692876416609257	Ngfr	1
+mmu04071	Environmental Information Processing	Signal transduction	mmu04071	Sphingolipid signaling pathway - Mus musculus (house mouse)	1/79	126/9468	0.654513806908093	0.745841314848757	0.70498427182267	Fyn	1
+mmu04371	Environmental Information Processing	Signal transduction	mmu04371	Apelin signaling pathway - Mus musculus (house mouse)	1/79	137/9468	0.685342067039747	0.776456908322488	0.733922749005144	Gnb3	1
+mmu04910	Organismal Systems	Endocrine system	mmu04910	Insulin signaling pathway - Mus musculus (house mouse)	1/79	139/9468	0.690647836788467	0.777971126497354	0.735354018601151	Socs3	1
+mmu05418	Human Diseases	Cardiovascular disease	mmu05418	Fluid shear stress and atherosclerosis - Mus musculus (house mouse)	1/79	147/9468	0.711001801146529	0.795471276254821	0.751895513538391	Gstm1	1
+mmu05322	Human Diseases	Immune disease	mmu05322	Systemic lupus erythematosus - Mus musculus (house mouse)	1/79	149/9468	0.715880101942258	0.795471276254821	0.751895513538391	Fcgr4	1
+mmu01240	Metabolism	Global and overview maps	mmu01240	Biosynthesis of cofactors - Mus musculus (house mouse)	1/79	152/9468	0.723045495500503	0.795471276254821	0.751895513538391	Ggh	1
+mmu04921	Organismal Systems	Endocrine system	mmu04921	Oxytocin signaling pathway - Mus musculus (house mouse)	1/79	153/9468	0.725394079211909	0.795471276254821	0.751895513538391	Cacna1d	1
+mmu04150	Environmental Information Processing	Signal transduction	mmu04150	mTOR signaling pathway - Mus musculus (house mouse)	1/79	157/9468	0.734593372459809	0.795471276254821	0.751895513538391	Igf1r	1
+mmu04390	Environmental Information Processing	Signal transduction	mmu04390	Hippo signaling pathway - Mus musculus (house mouse)	1/79	157/9468	0.734593372459809	0.795471276254821	0.751895513538391	Stk3	1
+mmu04932	Human Diseases	Endocrine and metabolic disease	mmu04932	Non-alcoholic fatty liver disease - Mus musculus (house mouse)	1/79	157/9468	0.734593372459809	0.795471276254821	0.751895513538391	Socs3	1
+mmu05161	Human Diseases	Infectious disease: viral	mmu05161	Hepatitis B - Mus musculus (house mouse)	1/79	163/9468	0.747824675041611	0.805349650044812	0.761232751922057	Creb5	1
+mmu04140	Cellular Processes	Transport and catabolism	mmu04140	Autophagy - animal - Mus musculus (house mouse)	1/79	166/9468	0.754193927101041	0.807770544873246	0.763521030599846	Igf1r	1
+mmu04141	Genetic Information Processing	Folding, sorting and degradation	mmu04141	Protein processing in endoplasmic reticulum - Mus musculus (house mouse)	1/79	171/9468	0.764458207751575	0.81431417782233	0.769706204601128	Uggt2	1
+mmu04621	Organismal Systems	Immune system	mmu04621	NOD-like receptor signaling pathway - Mus musculus (house mouse)	1/79	216/9468	0.839714351497928	0.889643312938345	0.84090882425966	Oas1a	1
+mmu05167	Human Diseases	Infectious disease: viral	mmu05167	Kaposi sarcoma-associated herpesvirus infection - Mus musculus (house mouse)	1/79	221/9468	0.846443062611401	0.891271331891708	0.84244766064952	Gnb3	1
+mmu05208	Human Diseases	Cancer: overview	mmu05208	Chemical carcinogenesis - reactive oxygen species - Mus musculus (house mouse)	1/79	224/9468	0.850345607468109	0.891271331891708	0.84244766064952	Gstm1	1
+mmu04810	Cellular Processes	Cell motility	mmu04810	Regulation of actin cytoskeleton - Mus musculus (house mouse)	1/79	231/9468	0.8590747910073	0.892142286894718	0.843270904905856	Arhgef12	1
+mmu04714	Organismal Systems	Environmental adaptation	mmu04714	Thermogenesis - Mus musculus (house mouse)	1/79	232/9468	0.860280062362764	0.892142286894718	0.843270904905856	Creb5	1
+mmu05171	Human Diseases	Infectious disease: viral	mmu05171	Coronavirus disease - COVID-19 - Mus musculus (house mouse)	1/79	249/9468	0.879279486317414	0.906489942043925	0.856832598279972	Oas1a	1
+mmu04020	Environmental Information Processing	Signal transduction	mmu04020	Calcium signaling pathway - Mus musculus (house mouse)	1/79	253/9468	0.883365198624437	0.906489942043925	0.856832598279972	Cacna1d	1
+mmu05012	Human Diseases	Neurodegenerative disease	mmu05012	Parkinson disease - Mus musculus (house mouse)	1/79	266/9468	0.89572358174732	0.913745895295314	0.86369107181512	Lrrk2	1
+mmu05168	Human Diseases	Infectious disease: viral	mmu05168	Herpes simplex virus 1 infection - Mus musculus (house mouse)	2/79	456/9468	0.899759988734671	0.913745895295314	0.86369107181512	Socs3/Oas1a	2
+mmu05016	Human Diseases	Neurodegenerative disease	mmu05016	Huntington disease - Mus musculus (house mouse)	1/79	303/9468	0.924253129608318	0.933781512387785	0.882629141676961	Creb5	1
+mmu05165	Human Diseases	Infectious disease: viral	mmu05165	Human papillomavirus infection - Mus musculus (house mouse)	1/79	359/9468	0.953421837201663	0.958311179956544	0.905815078798881	Creb5	1
+mmu04080	Environmental Information Processing	Signaling molecules and interaction	mmu04080	Neuroactive ligand-receptor interaction - Mus musculus (house mouse)	1/79	391/9468	0.964769360204201	0.964769360204201	0.9119194811812	Oprm1	1
