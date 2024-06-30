@@ -114,7 +114,7 @@ p3
 ggsave(filename = "volcano_OF-WT_YF-WT.pdf", plot = p3, width = 16, height = 16)
 ```
 
-###male
+###male Figure2n
 
 ```{r}
 # 基础代码
@@ -124,10 +124,14 @@ options(bitmapType = 'cairo')
 # 加载 ggplot2 和 EnhancedVolcano 库
 library(ggplot2)
 library(EnhancedVolcano)
+# 加载字体库
+library(extrafont)
 
+# 加载并注册 Arial 字体
+loadfonts(device = "pdf")
 
 # 读取差异基因分析结果的 CSV 文件，文件路径为 "/hdd/hlf/result/bulk/deg/gene/OF-WT_YF-WT/2-DEG_intersect_results.csv"
-deg<-read.csv("~/waibao_hezuo/OM-WT_YM-WT_2-DEG_intersect_results.csv",row.names=1)
+deg<-read.csv("~/waibao_hezuo/Ext1D_figure2/YM-KO_YM-WT/2-DEG_intersect_results.csv",row.names=1)
 
 # 选择感兴趣的列并重命名
 deg <- deg[, c("log2FoldChange_DESeq2", "padj_DESeq2")]
@@ -137,7 +141,8 @@ colnames(deg) <- c("log2FoldChange", "padj")
 DEG <- deg
 
 # 设置 logFC 的阈值
-logFC_cutoff <- 1
+#logFC_cutoff <- 1
+logFC_cutoff <- 2
 
 # 根据 logFC 和 padj 的值给基因分类
 DEG$change <- as.factor(ifelse(DEG$padj < 0.05 & abs(DEG$log2FoldChange) > logFC_cutoff,
@@ -181,7 +186,7 @@ highlight_genes <- c("Sdcbp2", "Kcnk1", "Car2", "Zfp345", "Ctsf", "Il10", "Iigp1
 
 # 再次绘制火山图
 ggplot(data = DEG, aes(x = log2FoldChange, y = -log10(padj), color = change)) +
-  geom_point(alpha = 0.8, size = 3) +
+  geom_point(alpha = 0.8, size = 2) +
   labs(x = "log2 fold change", y = "-log10 padj") +
   ggtitle(this_title) +
   theme_bw(base_size = 20) +
@@ -196,20 +201,27 @@ library(ggrepel)
 
 # 在 DEG 数据框中添加一列以标记高亮基因
 DEG$highlight_genes <- ifelse(rownames(DEG) %in% highlight_genes, rownames(DEG), NA)
-
-# 打印修改后的 DEG 数据框
-print(DEG)
-p2
+p3 <- p2 + geom_text_repel(aes(label = highlight_genes),
+                     color = "black", 
+                     size = 6,family = "Arial",
+                     box.padding = unit(2, "lines"),
+                     point.padding = unit(0.3, "lines"), 
+                     segment.size = 0.5,  
+                     max.overlaps = 50)
+ggsave(filename = "YM-KO_VS_YM-WT.pdf", plot = p3, width = 16, height = 16)
 ```
 
 ####增加显示的数量
 
 ```{r}
-p3 <- p2 + geom_text_repel(aes(label = highlight_genes),color = "black", size = 6,family = "Arial",box.padding = unit(0.8, "lines"), point.padding = unit(0.3, "lines"), segment.size = 0.5,  max.overlaps = 20)
-
 p3
+
 ```
 
 ```{r}
-ggsave(filename = "volcano_OM-WT_YM-WT.pdf", plot = p3, width = 16, height = 16)
+ggsave(filename = "YM-KO_VS_YM-WT.pdf", plot = p3, width = 16, height = 16)
 ```
+```{r}
+getwd()
+```
+

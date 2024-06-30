@@ -1,0 +1,318 @@
+---
+title: "GO enrich"
+output: html_notebook
+---
+
+```{r}
+getwd()
+```
+
+# 初始化
+
+```{r}
+# 初始化 注意到这里用的是小鼠的
+suppressPackageStartupMessages(library(clusterProfiler))
+library(tidyverse)
+library(KEGG.db) 
+library(ggplot2)
+library(RColorBrewer)
+library(gridExtra)
+library(enrichplot)
+library(plyr)
+library(ggrepel)
+library(org.Mm.eg.db)
+library(pheatmap)
+library(RColorBrewer)
+
+
+#加载字体库
+library(extrafont)
+
+# 加载并注册 Arial 字体
+loadfonts(device = "pdf")
+```
+
+# data in
+
+```{r}
+# data in
+deg<-read.csv("~/waibao_hezuo/Ext1D_figure2/YM-KO_YM-WT/2-DEG_intersect_results.csv",row.names=1)
+
+# 首先执行差异基因的过滤
+# 将|FoldChange|>2 & p<=0.05的差异基因筛选出来
+# 选择感兴趣的列并重命名
+deg <- deg[, c("log2FoldChange_DESeq2", "padj_DESeq2")]
+colnames(deg) <- c("log2FoldChange", "padj")
+
+# 设置 logFC 的阈值
+logFC_cutoff <- 2
+
+
+deg$group <- as.factor(ifelse(deg$padj <= 0.05 & abs(deg$log2FoldChange) > logFC_cutoff,
+                               ifelse(deg$log2FoldChange > logFC_cutoff, "UP", "DOWN"),
+                               "NOT"))
+deg$gene_name <- rownames(deg)
+deg$ENTREZID <- mapIds(org.Mm.eg.db,
+                     keys=deg$gene_name,
+                     column="ENTREZID",
+                     keytype="SYMBOL",
+                     multiVals="first")
+```
+
+
+```{r}
+#定义新变量
+deg <- deg %>% 
+  dplyr::select(gene_name,ENTREZID,log2FoldChange,group) %>% 
+  filter(ENTREZID!="NA") %>% 
+  distinct(ENTREZID,.keep_all = T)
+UP_deg<-deg[deg$group == "UP", ]
+DOWN_deg<-deg[deg$group == "DOWN", ]
+
+```
+
+
+# 根据新的要求，我们对所有差异基因进行富集，然后Go富集的通路的P值求-log10
+```{r}
+#定义新变量
+ALL_deg<-deg[deg$group != "NOT", ]
+```
+
+## 开始富集——all
+```{r}
+GO_results <- enrichGO(gene = ALL_deg$gene_name, 
+                       OrgDb = "org.Mm.eg.db", 
+                       keyType = "SYMBOL", 
+                       ont = "ALL",
+                       pvalueCutoff = 1,
+                       maxGSSize = 50000,
+                       minGSSize = 1,)
+View(GO_results)
+ALL_all <- as.data.frame(GO_results)
+View(ALL_all)
+write.csv(ALL_all,file="EnrichGO-DESeq2_gene_diff_GO_enrichment.csv")
+```
+
+## 开始富集——UP
+```{r}
+## 开始富集——all
+GO_results <- enrichGO(gene = UP_deg$gene_name, 
+                       OrgDb = "org.Mm.eg.db", 
+                       keyType = "SYMBOL", 
+                       ont = "ALL",
+                       pvalueCutoff = 1,
+                       maxGSSize = 50000,
+                       minGSSize = 1,)
+UP_all <- as.data.frame(GO_results)
+write.csv(UP_all,file="EnrichGO-DESeq2_gene_UP_GO_enrichment.csv")
+```
+
+## 开始富集——DOWN
+```{r}
+GO_results <- enrichGO(gene = DOWN_deg$gene_name, 
+                       OrgDb = "org.Mm.eg.db", 
+                       keyType = "SYMBOL", 
+                       ont = "ALL",
+                       pvalueCutoff = 1,
+                       maxGSSize = 50000,
+                       minGSSize = 1,)
+DOWN_all <- as.data.frame(GO_results)
+write.csv(DOWN_all,file="EnrichGO-DESeq2_gene_DOWN_GO_enrichment.csv")
+```
+
+
+这里出现问题，富集到通路与预期不符，先把之前的1.9 cutoff的数据重新绘图，all up 和down都绘图 barplot
+## 对富集的结果进行绘制
+```{r}
+getwd()
+
+```
+
+```{r}
+# 加载必要的库
+suppressPackageStartupMessages(library(clusterProfiler))
+library(tidyverse)
+library(ggplot2)
+library(RColorBrewer)
+library(readxl)
+
+# 读取上调和下调以及所有的的GO富集结果文件
+diff_file <- "./YM-KO_YM-WT/3-EnrichGO-DESeq2_gene_diff_GO_enrichment.csv"
+up_file <- "./YM-KO_YM-WT/3-EnrichGO-DESeq2_gene_Up_GO_enrichment.csv"
+down_file <- "./YM-KO_YM-WT/3-EnrichGO-DESeq2_gene_Down_GO_enrichment.csv"
+
+diff_data <- read.csv(diff_file, header = TRUE, sep = " ")
+up_data <- read.csv(up_file, header = TRUE, sep = " ")
+down_data <- read.csv(down_file, header = TRUE, sep = " ")
+
+# 添加分组信息
+diff_data$group <- "diff"
+up_data$group <- "UP"
+down_data$group <- "DOWN"
+```
+
+
+```{r}
+# 筛选出指定的上调和下调通路
+selected <- c(
+"phagocytosis",
+"positive regulation of phagocytosis",
+"regulation of leukocyte apoptotic process",
+"regulation of tumor necrosis factor production",
+"regulation of tumor necrosis factor superfamily cytokine production",
+"cellular response to reactive oxygen species leukocyte apoptotic process",
+"negative regulation of cell growth"
+)
+
+#selected_down <- c(
+#  "regulation of cell growth",
+#  "mitochondrial ATP synthesis coupled electron transport"
+#)
+
+#up_data <- up_data %>% filter(Description %in% selected_up)
+#down_data <- down_data %>% filter(Description %in% selected_down)
+
+diff_data <- diff_data %>% filter(Description %in% selected)
+up_data <- up_data %>% filter(Description %in% selected)
+down_data <- down_data %>% filter(Description %in% selected)
+```
+
+
+```{r}
+# 转换p值为-log10(p值)
+diff_data$pvalue <- -log10(diff_data$pvalue) 
+up_data$pvalue <- -log10(up_data$pvalue)
+down_data$pvalue <- -log10(down_data$pvalue)
+```
+
+# UP 和 DOWN一起画
+```{r}
+# 创建一个新的变量，用于分组上调和下调，确保下调部分为负数
+up_data$pvalue <- up_data$pvalue
+down_data$pvalue <- -down_data$pvalue
+
+# 合并数据
+data <- rbind(up_data, down_data)
+
+# 去除描述因子的重复项
+data <- data %>% distinct(Description, .keep_all = TRUE)
+
+# 按p值排序
+data <- data[order(data$pvalue), ]
+
+# 创建描述因子，并设置顺序
+data$Description <- factor(data$Description, levels = unique(data$Description))
+```
+
+
+
+
+```{r}
+# 自定义主题
+mytheme <- theme(
+  axis.text.x = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  axis.ticks.y = element_blank(),
+  axis.text.y = element_text(size = 6, family = "Arial"),
+  axis.title.x = element_text(size = 6, family = "Arial"),
+  axis.title.y = element_text(size = 6, family = "Arial"),
+  axis.line = element_line(linewidth = 1),
+  plot.margin = unit(c(1, 1, 1, 1), "cm"), # up left down right
+  plot.title = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  legend.title = element_text(size = 6, family = "Arial"),
+  legend.text = element_text(size = 6, family = "Arial"),
+  legend.position = "right",
+  legend.background = element_rect(fill = 'transparent')
+)
+
+# 绘制条形图，调整条的宽度
+p <- ggplot(data = data, aes(x = Description, y = pvalue, fill = group)) +
+  geom_col(width = 0.7) +  # 调整条的宽度
+  coord_flip() +
+  scale_fill_manual(values = c('UP' = '#8A2BE2')) +
+  labs(x = NULL, y = bquote("-" ~ Log[10] ~ "(P value)"), title = "GO Term Enrichment") +
+  theme_bw() +
+  mytheme +
+  theme(
+    legend.position = "none",
+    axis.line.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank()
+  )
+
+# 添加注释，注释从条形图的起点开始，并左对齐
+p <- p + geom_text(aes(x = Description, y = 0, label = Description),
+                   hjust = 0, color = 'black', size = 2, family = "Arial", nudge_y = 0.1) +
+     scale_x_discrete(labels = NULL) +
+     scale_y_continuous(expand = expansion(add = c(0.1, 0.1)),
+                        limits = c(0, 7), breaks = seq(0, 7, 1),
+                        labels = c(0, 1, 2, 3, 4, 5, 6, 7))
+
+# 保存图像到文件，调整画布大小
+ggsave(filename = "Figure2o_cut1.9_GO_Term_Enrichment_Barplot_up.pdf", plot = p, width = 5.5, height = length(unique(data$Description)) * 0.45)  # 根据数据量调整高度
+
+```
+
+# diff绘图
+```{r}
+# 去除描述因子的重复项
+diff_data <- diff_data %>% distinct(Description, .keep_all = TRUE)
+
+# 按p值排序
+diff_data <- diff_data[order(diff_data$pvalue), ]
+
+# 创建描述因子，并设置顺序
+diff_data$Description <- factor(diff_data$Description, levels = unique(diff_data$Description))
+data <- diff_data
+```
+
+
+
+
+```{r}
+# 自定义主题
+mytheme <- theme(
+  axis.text.x = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  axis.ticks.y = element_blank(),
+  axis.text.y = element_text(size = 6, family = "Arial"),
+  axis.title.x = element_text(size = 6, family = "Arial"),
+  axis.title.y = element_text(size = 6, family = "Arial"),
+  axis.line = element_line(linewidth = 1),
+  plot.margin = unit(c(1, 1, 1, 1), "cm"), # up left down right
+  plot.title = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  legend.title = element_text(size = 6, family = "Arial"),
+  legend.text = element_text(size = 6, family = "Arial"),
+  legend.position = "right",
+  legend.background = element_rect(fill = 'transparent')
+)
+
+# 绘制条形图，调整条的宽度
+p <- ggplot(data = data, aes(x = Description, y = pvalue, fill = group)) +
+  geom_col(width = 0.7) +  # 调整条的宽度
+  coord_flip() +
+  scale_fill_manual(values = c('diff' = '#8A2BE2')) +
+  labs(x = NULL, y = bquote("-" ~ Log[10] ~ "(P value)"), title = "GO Term Enrichment") +
+  theme_bw() +
+  mytheme +
+  theme(
+    legend.position = "none",
+    axis.line.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank()
+  )
+
+# 添加注释，注释从条形图的起点开始，并左对齐
+p <- p + geom_text(aes(x = Description, y = 0, label = Description),
+                   hjust = 0, color = 'black', size = 2, family = "Arial", nudge_y = 0.1) +
+     scale_x_discrete(labels = NULL) +
+     scale_y_continuous(expand = expansion(add = c(0.1, 0.1)),
+                        limits = c(0, 7), breaks = seq(0, 7, 1),
+                        labels = c(0, 1, 2, 3, 4, 5, 6, 7))
+
+# 保存图像到文件，调整画布大小
+ggsave(filename = "Figure2o_cut1.9_GO_Term_Enrichment_Barplot_diff.pdf", plot = p, width = 5, height = length(unique(data$Description)) * 0.5)  # 根据数据量调整高度
+
+```
+
+

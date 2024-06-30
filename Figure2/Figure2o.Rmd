@@ -130,16 +130,16 @@ down_data$group <- "DOWN"
 
 # 筛选出指定的上调和下调通路
 selected_up <- c(
-"negative regulation of cell cycle execution phase of apoptosis",
-"DNA damage checkpoint signaling",
-"ATP metabolic process",
-"natural killer cell mediated cytotoxicity",
-"natural killer cell mediated immunity"
+  "negative regulation of cell cycle process",
+  "positive regulation of execution phase of apoptosis",
+  "mitotic intra-S DNA damage checkpoint signaling",
+  "natural killer cell mediated cytotoxicity",
+  "natural killer cell mediated immunity"
 )
-selected_down <- c(
-"regulation of cell growth",
-"regulation of mitochondrial membrane potential"
 
+selected_down <- c(
+  "regulation of cell growth",
+  "mitochondrial ATP synthesis coupled electron transport"
 )
 
 up_data <- up_data %>% filter(Description %in% selected_up)
@@ -173,7 +173,7 @@ mytheme <- theme(
   axis.title.x = element_text(size = 6, family = "Arial"),
   axis.title.y = element_text(size = 6, family = "Arial"),
   axis.line = element_line(linewidth = 1),
-  plot.margin = unit(c(1, 1, 1, 1), "cm"), # up left down right
+  plot.margin = unit(c(1, 1, 0.5, 1), "cm"), # up left down right
   plot.title = element_text(hjust = 0.5, size = 6, family = "Arial"),
   legend.title = element_text(size = 6, family = "Arial"),
   legend.text = element_text(size = 6, family = "Arial"),
@@ -208,7 +208,7 @@ p <- p + geom_text(data = subset(data, group == "UP"), aes(x = Description, y = 
                         labels = c(4,3, 2, 1, 0, 1, 2, 3,4))
 
 # 保存图像到文件
-ggsave(filename = "GO_Term_Enrichment_Barplot.pdf", plot = p, width = 5, height = 2)  # 调整高度为 4
+ggsave(filename = "GO_Term_Enrichment_Barplot.pdf", plot = p, width = 5, height = 4)  # 调整高度为 4
 
 ```
 
