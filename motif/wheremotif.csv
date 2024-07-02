@@ -1,0 +1,16 @@
+group,gene name,motif name,name,path
+Common,Irf8,IRF8(IRF)/BMDM-IRF8-ChIP-Seq(GSE77884)/H/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResultser,known4.motif,/Users/sunhao/waibao_hezuo/motif/OF_enrich_motifDAR/knownResults
+Common,Ets1,ETS1(ETS)/Jurkat-ETS1-ChIP-Seq(GSE17954)/H/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResultser,known3.motif,/Users/sunhao/waibao_hezuo/motif/OF_enrich_motifDAR/knownResults
+Common,NFkB,NFkB-p65(RHD)/GM12787-p65-ChIP-Seq(GSE19485)/H/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResultser,known49.motif,/Users/sunhao/waibao_hezuo/motif/OF_enrich_motifDAR/knownResults
+Common,p73,p73(p53)/Trachea-p73-ChIP-Seq(PRJNA310161)/H/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResultser,known251.motif,/Users/sunhao/waibao_hezuo/motif/OF_enrich_motifDAR/knownResults
+Common,Bcl11a,Bcl11a(Zf)/HSPC-BCL11A-ChIP-Seq(GSE104676)/H/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResultser,known139.motif,/Users/sunhao/waibao_hezuo/motif/OF_enrich_motifDAR/knownResults
+Male,PU.1,PU.1-IRF(ETS:IRF)/Bcell-PU.1-ChIP-Seq(GSE21512)/H/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResultser,known27.motif,/Users/sunhao/waibao_hezuo/motif/OF_enrich_motifDAR/knownResults
+Male,Klf4,Klf4(Zf)/mES-Klf4-ChIP-Seq(GSE11431)/H/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResultser,known44.motif,/Users/sunhao/waibao_hezuo/motif/OF_enrich_motifDAR/knownResults
+Male,Foxp1,FOXP1(Forkhead)/H9-FOXP1-ChIP-Seq(GSE31006)/H/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResultser,known164.motif,/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResults
+Male,Ctcf,CTCF(Zf)/CD4+-CTCF-ChIP-Seq(Barski_et_al.)/H/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResultser,known156.motif,/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResults
+Male,Foxa1,FOXA1(Forkhead)/MCF7-FOXA1-ChIP-Seq(GSE26831)/H/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResultser,known172.motif,/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResults
+Female,Myc,n-Myc(bHLH)/mES-nMyc-ChIP-Seq(GSE11431)/H/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResultser,known179.motif,/Users/sunhao/waibao_hezuo/motif/OF_enrich_motifDAR/knownResults
+Female,Gata1,Gata1(Zf)/K562-GATA1-ChIP-Seq(GSE18829)/H/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResultser,known207.motif,/Users/sunhao/waibao_hezuo/motif/OF_enrich_motifDAR/knownResults
+Female,Gata4,Gata4(Zf)/Heart-Gata4-ChIP-Seq(GSE35151)/H/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResultser,known209.motif,/Users/sunhao/waibao_hezuo/motif/OF_enrich_motifDAR/knownResults
+Female,Nur77,Nur77(NR)/K562-NR4A1-ChIP-Seq(GSE31363)/H/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResultser,known253.motif,/Users/sunhao/waibao_hezuo/motif/OF_enrich_motifDAR/knownResults
+Female,Stat6,STAT6(Stat)/Macrophage-Stat6-ChIP-Seq(GSE38377)/H/Users/sunhao/waibao_hezuo/motif/OM_enrich_motifDAR/knownResultser,known256.motif,/Users/sunhao/waibao_hezuo/motif/OF_enrich_motifDAR/knownResults

@@ -1,0 +1,1 @@
+cmd = homer_peaks.tmp mm10 OM_enrich_motifDAR -len 8,10,12

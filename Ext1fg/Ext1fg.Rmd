@@ -208,7 +208,7 @@ p <- p + geom_text(data = subset(data, group == "UP"), aes(x = Description, y = 
                         labels = c(4,3, 2, 1, 0, 1, 2, 3,4))
 
 # 保存图像到文件
-ggsave(filename = "GO_Term_Enrichment_Barplot.pdf", plot = p, width = 5, height = 2)  # 调整高度为 4
+ggsave(filename = "GO_Term_Enrichment_Barplot.pdf", plot = p, width = 5, height = 3)  # 调整高度为 4
 
 ```
 

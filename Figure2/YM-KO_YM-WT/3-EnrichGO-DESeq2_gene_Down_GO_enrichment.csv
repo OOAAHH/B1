@@ -1,0 +1,23 @@
+"ONTOLOGY" "ID" "Description" "GeneRatio" "BgRatio" "pvalue" "p.adjust" "qvalue" "geneID" "Count"
+"GO:0031349" "BP" "GO:0031349" "positive regulation of defense response" "16/250" "452/28564" 2.75858314737772e-06 0.00870057124682933 0.00770661018225313 "Gprc5b/Ccr2/Nod1/Pde2a/Ifi204/Slc15a2/Cd14/Lrrfip2/Alox5ap/Arg1/Adam8/Cdk19/Lgr4/Clec7a/Tnfrsf1a/Lag3" 16
+"GO:0035455" "BP" "GO:0035455" "response to interferon-alpha" "5/250" "32/28564" 8.19132996126281e-06 0.0129177273489115 0.0114419945879955 "Ifi204/Ifitm2/Ifitm3/Ifitm6/Ifit1" 5
+"GO:0098885" "BP" "GO:0098885" "modification of postsynaptic actin cytoskeleton" "4/250" "20/28564" 2.48567358095803e-05 0.0220238735154392 0.0195078464472768 "Sptb/Itsn1/Ptk2/Pfn2" 4
+"GO:0007264" "BP" "GO:0007264" "small GTPase mediated signal transduction" "14/250" "428/28564" 2.79313551242095e-05 0.0220238735154392 0.0195078464472768 "Arhgef10/Rasgef1b/Cyth3/Hmox1/Itsn1/Rhebl1/Cyth2/Plekhg5/Ssx2ip/Rapgef4/Lpar2/Dok2/Shtn1/Dock6" 14
+"GO:0048193" "BP" "GO:0048193" "Golgi vesicle transport" "11/250" "279/28564" 3.87153628990214e-05 0.0244216509167027 0.0216316996071585 "Ehd3/Trappc10/Sorl1/Creb3l2/Cyth3/Cog5/Cnst/Sec24d/Sec31b/Bbs2/Bbs1" 11
+"GO:0006195" "BP" "GO:0006195" "purine nucleotide catabolic process" "5/250" "49/28564" 6.87129240291642e-05 0.0337908343844818 0.0299305391504237 "Pde2a/Nudt15/Nt5e/Xdh/Nudt7" 5
+"GO:1903557" "BP" "GO:1903557" "positive regulation of tumor necrosis factor superfamily cytokine production" "7/250" "116/28564" 7.49955106821092e-05 0.0337908343844818 0.0299305391504237 "Ccr2/Nod1/Cd14/Lrrfip2/Adam8/Clec7a/Tnfrsf1a" 7
+"GO:0002246" "BP" "GO:0002246" "wound healing involved in inflammatory response" "3/250" "11/28564" 0.000103773743517996 0.0353831734027078 0.03134096793071 "Ccr2/Clec10a/Hmox1" 3
+"GO:0042391" "BP" "GO:0042391" "regulation of membrane potential" "14/250" "488/28564" 0.000113374029144752 0.0353831734027078 0.03134096793071 "Pid1/Cnr2/Ehd3/Rnf122/Slc4a11/Mapt/Kctd7/Gabbr1/Rapgef4/Stox1/Shtn1/Kcnj5/Cacnb4/Gclc" 14
+"GO:0072523" "BP" "GO:0072523" "purine-containing compound catabolic process" "5/250" "55/28564" 0.000120116678924834 0.0353831734027078 0.03134096793071 "Pde2a/Nudt15/Nt5e/Xdh/Nudt7" 5
+"GO:0051881" "BP" "GO:0051881" "regulation of mitochondrial membrane potential" "6/250" "88/28564" 0.000125968488886417 0.0353831734027078 0.03134096793071 "Pid1/Rnf122/Slc4a11/Mapt/Stox1/Gclc" 6
+"GO:0050727" "BP" "GO:0050727" "regulation of inflammatory response" "12/250" "377/28564" 0.000134622092844798 0.0353831734027078 0.03134096793071 "Gprc5b/Ccr2/Cnr2/Cd200r1/Pde2a/Calcrl/Bst1/Alox5ap/Nt5e/Adam8/Cdk19/Tnfrsf1a" 12
+"GO:0017157" "BP" "GO:0017157" "regulation of exocytosis" "9/250" "226/28564" 0.000181588793471141 0.0440562349698444 0.0390232111637577 "Ccr2/Ncs1/Hmox1/Pfn2/Wdr41/Doc2g/Rapgef4/Pram1/Cacnb4" 9
+"GO:0098792" "BP" "GO:0098792" "xenophagy" "3/250" "14/28564" 0.000224521602820021 0.047209409019623 0.0418161637813568 "Lgals8/Nod1/Wipi2" 3
+"GO:1901214" "BP" "GO:1901214" "regulation of neuron death" "12/250" "405/28564" 0.000259898946570157 0.0485635525714655 0.043015608759026 "Ddit4/Cd200r1/Sorl1/Hmox1/Itsn1/Mapt/Nsmf/Thap11/Adam8/Tmem259/Tnfrsf1a/Gclc" 12
+"GO:0044782" "BP" "GO:0044782" "cilium organization" "12/250" "408/28564" 0.000277865332485928 0.0485635525714655 0.043015608759026 "Ehd3/Unc119b/Ahi1/Tapt1/Dnah8/Spag1/Ift80/Ssx2ip/Aurka/Hdac6/Bbs2/Bbs1" 12
+"GO:0006790" "BP" "GO:0006790" "sulfur compound metabolic process" "10/250" "299/28564" 0.000328468988502684 0.0485635525714655 0.043015608759026 "Extl3/Tcf7l2/Dip2a/Csgalnact2/Xdh/Hs3st1/Sult1a1/Nudt7/Gclc/Arsg" 10
+"GO:0071706" "BP" "GO:0071706" "tumor necrosis factor superfamily cytokine production" "8/250" "195/28564" 0.000338743867017198 0.0485635525714655 0.043015608759026 "Ccr2/Nod1/Errfi1/Cd14/Lrrfip2/Adam8/Clec7a/Tnfrsf1a" 8
+"GO:0036064" "CC" "GO:0036064" "ciliary basal body" "10/254" "183/28585" 6.05605634713317e-06 0.00204694704533101 0.00175944373874606 "Ahi1/Tapt1/Ptk2/Ift80/Ssx2ip/Aurka/Hdac6/Jade1/Bbs2/Bbs1" 10
+"GO:0031252" "CC" "GO:0031252" "cell leading edge" "13/254" "412/28585" 9.04183318178666e-05 0.0152806980772194 0.0131344524114375 "Pacsin1/Lima1/Cyth3/Wls/Itsn1/Ptk2/Mapt/Cyth2/Plekhg5/Gabbr1/Ssx2ip/Hdac6/Shtn1" 13
+"GO:0005085" "MF" "GO:0005085" "guanyl-nucleotide exchange factor activity" "9/252" "203/28171" 9.51393317010152e-05 0.0329705613307064 0.0306780953438518 "Arhgef10/Rasgef1b/Cyth3/Itsn1/Cyth2/Plekhg5/Wdr41/Rapgef4/Dock6" 9
+"GO:0000287" "MF" "GO:0000287" "magnesium ion binding" "9/252" "211/28171" 0.000127545691801572 0.0329705613307064 0.0306780953438518 "Pde2a/Extl3/Tdg/Ncs1/Wee1/Atp11a/Dyrk2/Nudt7/Gclc" 9

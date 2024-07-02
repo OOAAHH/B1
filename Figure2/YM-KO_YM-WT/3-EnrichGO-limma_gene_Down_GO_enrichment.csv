@@ -1,0 +1,11 @@
+"ONTOLOGY" "ID" "Description" "GeneRatio" "BgRatio" "pvalue" "p.adjust" "qvalue" "geneID" "Count"
+"GO:0035455" "BP" "GO:0035455" "response to interferon-alpha" "6/166" "32/28564" 2.8131355728149e-08 6.84435884865865e-05 6.04083849320252e-05 "Ifitm2/Ifitm3/Ifi204/Ifitm6/Ifit1/Ifit3" 6
+"GO:0035456" "BP" "GO:0035456" "response to interferon-beta" "6/166" "71/28564" 3.6872556349009e-06 0.00401964738273346 0.0035477451103365 "Ifitm2/Ifitm3/Ifi204/Ifitm6/Ifit1/Ifit3" 6
+"GO:0098885" "BP" "GO:0098885" "modification of postsynaptic actin cytoskeleton" "4/166" "20/28564" 4.95640861002893e-06 0.00401964738273346 0.0035477451103365 "Itsn1/Sptb/Ptk2/Pfn2" 4
+"GO:0002246" "BP" "GO:0002246" "wound healing involved in inflammatory response" "3/166" "11/28564" 3.0733970505479e-05 0.0186939375599576 0.0164992894292572 "Ccr2/Hmox1/Clec10a" 3
+"GO:0010976" "BP" "GO:0010976" "positive regulation of neuron projection development" "8/166" "237/28564" 7.80866535978012e-05 0.0280190371247851 0.0247296323510337 "Gprc5b/Serpine2/Pacsin1/Creb3l2/Ahi1/Kif3c/Enc1/Mapt" 8
+"GO:0031346" "BP" "GO:0031346" "positive regulation of cell projection organization" "11/166" "459/28564" 8.28503258136454e-05 0.0280190371247851 0.0247296323510337 "Gprc5b/Serpine2/Pacsin1/Creb3l2/Wls/Tapt1/Ahi1/Kif3c/Enc1/Shtn1/Mapt" 11
+"GO:0030261" "BP" "GO:0030261" "chromosome condensation" "4/166" "42/28564" 0.00010364625323595 0.0280190371247851 0.0247296323510337 "Dffb/Cdca5/H1f0/Ncaph" 4
+"GO:0009895" "BP" "GO:0009895" "negative regulation of catabolic process" "9/166" "336/28564" 0.000162895728028574 0.0396325306293521 0.0349797142292938 "Ddit4/Serpine2/Sorl1/Dffb/Mtmr9/Trim40/Hmox1/Ptk2/Bmf" 9
+"GO:0035457" "BP" "GO:0035457" "cellular response to interferon-alpha" "3/166" "20/28564" 0.000204327081018916 0.0451934352835475 0.0398877746678076 "Ifi204/Ifit1/Ifit3" 3
+"GO:0001881" "BP" "GO:0001881" "receptor recycling" "4/166" "53/28564" 0.000258013537196923 0.0482882258461626 0.0426192401523663 "Lmtk2/Ehd3/Sorl1/Pex1" 4

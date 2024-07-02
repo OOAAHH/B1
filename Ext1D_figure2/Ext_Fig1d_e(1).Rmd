@@ -131,7 +131,7 @@ library(extrafont)
 loadfonts(device = "pdf")
 
 # 读取差异基因分析结果的 CSV 文件，文件路径为 "/hdd/hlf/result/bulk/deg/gene/OF-WT_YF-WT/2-DEG_intersect_results.csv"
-deg<-read.csv("~/waibao_hezuo/Ext1D_figure2/YM-KO_YM-WT/2-DEG_intersect_results.csv",row.names=1)
+deg<-read.csv("~/YM-KO_YM-WT/2-DEG_intersect_results.csv",row.names=1)
 
 # 选择感兴趣的列并重命名
 deg <- deg[, c("log2FoldChange_DESeq2", "padj_DESeq2")]
@@ -141,8 +141,7 @@ colnames(deg) <- c("log2FoldChange", "padj")
 DEG <- deg
 
 # 设置 logFC 的阈值
-#logFC_cutoff <- 1
-logFC_cutoff <- 2
+logFC_cutoff <- 1
 
 # 根据 logFC 和 padj 的值给基因分类
 DEG$change <- as.factor(ifelse(DEG$padj < 0.05 & abs(DEG$log2FoldChange) > logFC_cutoff,
@@ -192,22 +191,31 @@ ggplot(data = DEG, aes(x = log2FoldChange, y = -log10(padj), color = change)) +
   theme_bw(base_size = 20) +
   theme(plot.title = element_text(size = 15, hjust = 0.5)) +
   scale_color_manual(values = c('#a121f0', '#bebebe', '#ffad21')) -> p1
+```
 
+
+```{r}
 # 设置 x 和 y 轴的范围
 p1 + xlim(NA, 10) + ylim(NA, 30) -> p2
 
-# 加载 ggrepel 库以便高亮显示某些基因
-library(ggrepel)
+
+
+# 确认 highlight_genes 只包含在 DEG 数据框中的基因
+highlight_genes_in_data <- intersect(highlight_genes, rownames(DEG))
 
 # 在 DEG 数据框中添加一列以标记高亮基因
-DEG$highlight_genes <- ifelse(rownames(DEG) %in% highlight_genes, rownames(DEG), NA)
+DEG$highlight_genes <- ifelse(rownames(DEG) %in% highlight_genes_in_data, rownames(DEG), NA)
+
+# 绘制带有高亮基因注释的图表
 p3 <- p2 + geom_text_repel(aes(label = highlight_genes),
                      color = "black", 
-                     size = 6,family = "Arial",
+                     size = 6, family = "Arial",
                      box.padding = unit(2, "lines"),
                      point.padding = unit(0.3, "lines"), 
                      segment.size = 0.5,  
                      max.overlaps = 50)
+
+# 保存图像到文件
 ggsave(filename = "YM-KO_VS_YM-WT.pdf", plot = p3, width = 16, height = 16)
 ```
 
@@ -218,9 +226,7 @@ p3
 
 ```
 
-```{r}
-ggsave(filename = "YM-KO_VS_YM-WT.pdf", plot = p3, width = 16, height = 16)
-```
+
 ```{r}
 getwd()
 ```

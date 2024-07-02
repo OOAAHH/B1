@@ -1,0 +1,156 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+https://guangchuangyu.github.io/cn/2018/03/dotplot-for-homer-motif/
+
+```{r}
+#options(bitmapType = 'cairo')
+rm(list=ls())
+gc()
+
+# 加载必要的包
+library(motifStack)
+
+```
+# motif 可视化
+## homer 文件格式转换
+
+```{r}
+motiffile <- read.table("~/waibao_hezuo/motif/motif_draw_cluster_pcm_shortname/Bcl11a(Zf).motif")
+
+names(motiffile) <- c("A","C","G","T")
+A <- motiffile[,1]
+C <- motiffile[,2]
+G <- motiffile[,3]
+T <- motiffile[,4]
+data <- rbind(A,C,G,T)
+pcm <- data[,1:ncol(data)]
+#plot
+rownames(pcm) <- c("A","C","G","T")
+motif <- new("pcm", mat=as.matrix(pcm), name="Bcl11a(Zf)")
+opar<-par(mfrow=c(4,1))
+par(opar)
+plot(motif)
+```
+
+```{r}
+# 设置目录路径
+motif_dir <- "~/waibao_hezuo/motif/motif_draw_cluster_pcm_shortname"
+
+# 获取所有 .motif 文件
+motif_files <- list.files(motif_dir, pattern = "\\.motif$", full.names = TRUE)
+
+# 定义处理单个文件的函数
+process_motif_file <- function(file_path) {
+  # 读取文件
+  motiffile <- read.table(file_path, header = TRUE)
+  
+  # 设置列名
+  names(motiffile) <- c("A", "C", "G", "T")
+  
+  # 提取每列数据
+  A <- motiffile[, 1]
+  C <- motiffile[, 2]
+  G <- motiffile[, 3]
+  T <- motiffile[, 4]
+  
+  # 合并数据
+  data <- rbind(A, C, G, T)
+  pcm <- data[, 1:ncol(data)]
+  
+  # 设置行名
+  rownames(pcm) <- c("A", "C", "G", "T")
+  
+  # 获取不带后缀的文件名
+  file_name <- tools::file_path_sans_ext(basename(file_path))
+  
+  # 创建新 motif 对象
+  motif <- new("pcm", mat = as.matrix(pcm), name = file_name)
+  opar<-par(mfrow=c(4,1))
+  par(opar)
+  # 返回 motif 对象
+  return(motif)
+}
+
+# 处理所有 .motif 文件并存储在列表中
+motif_list <- lapply(motif_files, process_motif_file)
+
+assign("motif_list", motif_list, envir = .GlobalEnv)
+
+```
+
+
+
+## 建立进化树
+```{r}
+# 建立进化
+motifStack(motif_list,  layout="tree")
+
+```
+
+## 保存文件
+```{r}
+library(extrafont)
+
+# 导入系统字体
+font_import(pattern = "Arial")
+
+# 加载字体
+loadfonts(device = "pdf")
+library(motifStack)
+library(Cairo)
+```
+
+
+```{r}
+# 使用 Cairo 设备保存图形
+CairoPDF("multiple_motifs.pdf", width = 5, height =7,family = "Arial", pointsize = 6)
+
+# 绘制 motif 堆叠图
+ plotMotifLogoStackWithTree(motif_list, hc=hc, ncex = 0.92,ic.scale=FALSE, fonts="Arial",xaxis = FALSE,yaxis = FALSE,ylab = "",)
+
+# 关闭图形设备
+dev.off()
+
+```
+
+
+
+
+
+# 泡泡图的部分
+```{r}
+library(readxl)
+```
+
+```{r}
+y <- read_xlsx("~/waibao_hezuo/motif/motif_draw_副本.xlsx")
+```
+
+```{r}
+#这里的值看起来都不怎么好
+library(ggplot2)
+p <- ggplot(y, aes(type, motif)) + 
+    geom_point(aes(size=-LogPvalue)) + 
+    theme_minimal() + 
+    xlab(NULL) + ylab(NULL) + 
+    scale_size_continuous(range=c(1, 10))+ scale_x_discrete(limits = c("Common", "Male","Female")) +
+  theme(
+    text = element_text(family = "Arial", size = 6),
+    axis.text = element_text(family = "Arial", size = 6),
+    axis.title = element_text(family = "Arial", size = 6),
+    legend.text = element_text(family = "Arial", size = 6),
+    legend.title = element_text(family = "Arial", size = 6),
+    plot.title = element_text(family = "Arial", size = 6),
+    plot.subtitle = element_text(family = "Arial", size = 6),
+    plot.caption = element_text(family = "Arial", size = 6)
+  )
+
+```
+
+```{r}
+ggsave(filename="bubble.pdf",plot=p, width = 10, height =7)
+```
+

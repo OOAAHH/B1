@@ -1,0 +1,571 @@
+---
+title: "Figure1"
+output: html_notebook
+---
+
+#一、Figure1n 对于Figure1，有需求如下 对于panel
+
+```         
+| gene     | function              |
+|----------|-----------------------|
+| Gpr132   | cell_cycle            |
+| Eps8     | cell_cycle            |
+| Apbb1    | cell_cycle            |
+| Hus1b    | cell_cycle/DNA_damage |
+| Dlc1     | Apoptosis             |
+| Il9r     | cell_growth           |
+| Serpine2 | cell_growth           |
+| Bcl2l11  | 线粒体膜通透性               |
+| Bcl2l2   | 线粒体膜通透性/细胞色系C释放       |
+| Irf8     | cell_apoptosis        |
+| Id3      | 细胞凋亡和生存               |
+| Stk3     | 调控细胞凋亡和生存             |
+| Bcl11a   | 调控B细胞的生长发育            |
+```
+
+```{r}
+getwd()
+```
+
+
+
+```{r}
+# 原始代码
+options(bitmapType = 'cairo')
+rm(list=ls())
+gc()
+library(pheatmap)
+library(dplyr)
+library(RColorBrewer)
+bulk_matrix <- read.table("/home/hlf/nextflow/bulk/YF_YM_WT_rsem.merged.gene_tpm.tsv", header = TRUE, sep="\t")
+bulk_matrix <- bulk_matrix[!duplicated(bulk_matrix$gene_id), ]
+rownames(bulk_matrix)<-bulk_matrix$gene_id
+bulk_matrix <- bulk_matrix[, !names(bulk_matrix) %in% "gene_id"]
+
+####将要画的基因填入
+target_gene<-c("Gpr132","Eps8","Apbb1","Hus1b","Dlc1","Il9r","Serpine2","Bcl2l11","Bcl2l2","Irf8","Id3","Stk3","Bcl11a")
+bulk_matrix_inter <- bulk_matrix[target_gene, ]
+colnames(bulk_matrix_inter)<-c("YM_REP1", "YM_REP2", "OM_REP1", "OM_REP2", "YF_REP1", "YF_REP2", "OF_REP1", "OF_REP2")
+desired_order <- c("YM_REP1", "YM_REP2", "YF_REP1", "YF_REP2", "OM_REP1", "OM_REP2", "OF_REP1", "OF_REP2")
+
+bulk_matrix_inter <- bulk_matrix_inter[, desired_order]
+
+group_list <- factor(c("YM","YM","YF","YF","OM","OM","OF","OF"))
+
+dat<-log2(bulk_matrix_inter+1)
+
+table(group_list)
+n=t(scale(t(dat))) 
+n <- na.omit(n)  
+
+
+n[n>2]=2
+n[n< -2]= -2
+
+ac=data.frame(Group=group_list)
+rownames(ac)=colnames(n) 
+library(dplyr)
+
+ann_colors = list(Group=c(YM= "#009bff", YF= "#FFA500", OM= "#5558c7",OF= "#FF4500"))
+
+#
+coul <- colorRampPalette(brewer.pal(9, "OrRd"))(50)
+# colorRampPalette(colors = c("blue","white","red"))(100)
+#color = colorRampPalette(colors = c("blue","white","red"))(100),
+p2=pheatmap(n, 
+         scale = "none", show_rownames = FALSE,show_colnames = F,treeheight_row=0,
+         cluster_row = T, cluster_col = FALSE, annotation_col=ac, annotation_colors = ann_colors,gaps_col = c(4))
+
+p2
+
+ggsave(filename="Fig1n.pdf",plot=p2, width = 4, height = 6)
+```
+
+
+```{r}
+options(bitmapType = 'cairo')
+rm(list=ls())
+gc()
+
+library(ggplot2)
+library(pheatmap)
+library(dplyr)
+library(RColorBrewer)
+# 加载字体库
+library(extrafont)
+
+# 加载并注册 Arial 字体
+loadfonts(device = "pdf")
+#font_import(prompt = FALSE)
+#loadfonts()
+
+bulk_matrix <- read.table("/home/hlf/nextflow/bulk/YF_YM_WT_rsem.merged.gene_tpm.tsv", header = TRUE, sep="\t")
+bulk_matrix <- bulk_matrix[!duplicated(bulk_matrix$gene_id), ]
+rownames(bulk_matrix) <- bulk_matrix$gene_id
+bulk_matrix <- bulk_matrix[, !names(bulk_matrix) %in% "gene_id"]
+
+# 将要画的基因填入
+target_gene <- c("Gpr132", "Eps8", "Apbb1", "Hus1b", "Dlc1", "Il9r", "Serpine2", "Bcl2l11", "Bcl2l2", "Irf8", "Id3", "Stk3", "Bcl11a")
+bulk_matrix_inter <- bulk_matrix[target_gene, ]
+colnames(bulk_matrix_inter) <- c("YM_REP1", "YM_REP2", "OM_REP1", "OM_REP2", "YF_REP1", "YF_REP2", "OF_REP1", "OF_REP2")
+
+# 调整样本顺序
+desired_order <- c("YM_REP1", "YM_REP2", "OM_REP1", "OM_REP2", "YF_REP1", "YF_REP2", "OF_REP1", "OF_REP2")
+bulk_matrix_inter <- bulk_matrix_inter[, desired_order]
+
+# 设置分组
+group_list <- factor(c("YM", "YM", "OM", "OM", "YF", "YF", "OF", "OF"))
+
+
+dat <- log2(bulk_matrix_inter + 1)
+
+table(group_list)
+n <- t(scale(t(dat)))
+n <- na.omit(n)
+
+n[n > 2] = 2
+n[n < -2] = -2
+
+ac <- data.frame(Group = group_list)
+rownames(ac) <- colnames(n)
+ann_colors <- list(Group = c(YM = "#009bff", YF = "#FFA500", OM = "#5558c7", OF = "#FF4500"))
+
+
+coul <- colorRampPalette(brewer.pal(9, "OrRd"))(50)
+
+p2 <- pheatmap(
+  n,
+  scale = "none",
+  show_rownames = TRUE,
+  show_colnames = FALSE,
+  treeheight_row = 0,
+  cluster_row = TRUE,
+  cluster_col = FALSE,
+  annotation_col = ac,
+  annotation_colors = ann_colors,
+  gaps_col = c(4),
+  fontsize = 6, 
+  fontsize_row = 6, 
+  fontsize_col = 6, 
+  #fontfamily = "Arial"
+)
+p2
+
+ggsave(filename = "Fig.1n.pdf", plot = p2, width = 4, height = 6)
+
+```
+
+
+#二、Figure1o
+
+```{r}
+# 清理环境
+options(bitmapType = 'cairo')
+rm(list=ls())
+gc()
+
+library(pheatmap)
+library(dplyr)
+library(RColorBrewer)
+
+# 读取 原始的 ATAC-seq 注释文件
+#anno <- read.table("/hdd/hlf/result/atac_all/diffbind/mergebed/allwt_row_anno_gene.txt", header = TRUE, sep = "\t")
+anno <- read.csv("~/waibao_hezuo/Figure1/allwt_row_anno_gene.csv")
+
+
+# 读取 合并后 的 ATAC-seq 数据文件
+atac_data <- read_csv("~/waibao_hezuo/Figure1/atac_DESeq2_norm_count.csv")
+
+# 筛选标记为 Promoter 的基因
+promoter_genes <- anno %>% filter(grepl("Promoter", annotation))
+
+# 提取带有下划线的基因名
+promoter_genes <- promoter_genes %>% filter(grepl("_", GeneID))
+
+# 将要画的基因填入
+target_gene <- c("Gpr132", "Eps8", "Apbb1", "Hus1b", "Dlc1", "Il9r", "Serpine2", "Bcl2l11", "Bcl2l2", "Irf8", "Id3", "Stk3", "Bcl11a")
+```
+
+
+```{r}
+# 筛选目标基因
+target_gene_patterns <- paste0(target_gene, "_")
+promoter_target_genes <- promoter_genes %>% filter(grepl(paste(target_gene_patterns, collapse = "|"), GeneID))
+# 根据筛选结果过滤 ATAC-seq 数据，并保留 GeneID 列
+atac_data_filtered <- atac_data %>% filter(GeneID %in% promoter_target_genes$GeneID)
+```
+
+
+```{r}
+# 将 `spec_tbl_df` 转换为常规的 `data.frame`
+atac_data_filtered <- as.data.frame(atac_data_filtered)
+
+# 设置行名
+rownames(atac_data_filtered) <- atac_data_filtered[["GeneID"]]
+
+atac_data_filtered <- subset(atac_data_filtered, select = -GeneID)
+
+```
+
+
+```{r}
+# 样本顺序调整
+desired_order <- c("YM_REP1", "YM_REP2", "OM_REP1", "OM_REP2", "YF_REP1", "YF_REP2", "OF_REP1", "OF_REP2")
+atac_data_filtered <- atac_data_filtered[, desired_order]
+# 设置分组
+group_list <- factor(c("YM", "YM", "OM", "OM", "YF", "YF", "OF", "OF"))
+
+dat <- log2(atac_data_filtered + 1)
+
+table(group_list)
+n <- t(scale(t(dat)))
+n <- na.omit(n)
+
+n[n > 1] = 1
+n[n < 0] = 0
+
+ac <- data.frame(Group = group_list)
+rownames(ac) <- colnames(n)
+ann_colors <- list(Group = c(YM = "#009bff", YF = "#FFA500", OM = "#5558c7", OF = "#FF4500"))
+
+
+coul <- colorRampPalette(brewer.pal(9, "OrRd"))(50)
+
+p2 <- pheatmap(
+  n,
+  scale = "none",
+  show_rownames = TRUE,
+  show_colnames = FALSE,
+  treeheight_row = 0,
+  cluster_row = TRUE,
+  cluster_col = FALSE,
+  annotation_col = ac,
+  annotation_colors = ann_colors,
+  gaps_col = c(4),
+  fontsize = 6, 
+  fontsize_row = 6, 
+  fontsize_col = 6, 
+  #fontfamily = "Arial"
+)
+p2
+```
+看起来同一个基因的多个启动子区域被同时给出了？这里我应该如何进行理解？
+```{r}
+ggsave(filename = "Fig.1o.pdf", plot = p2, width = 4, height = 6)
+```
+
+## 2.1 对于figure2O， 新增需求直接合并样本出图 
+```{r}
+YM <- rowMeans(atac_data_filtered[, c("YM_REP1", "YM_REP2")])
+OM <- rowMeans(atac_data_filtered[, c("OM_REP1", "OM_REP2")])
+YF <- rowMeans(atac_data_filtered[, c("YF_REP1", "YF_REP2")])
+OF <- rowMeans(atac_data_filtered[, c("OF_REP1", "OF_REP2")])
+
+# 形成新的数据框
+atac_data_averaged <- data.frame(YM, OM, YF, OF)
+
+# 检查结果
+print(atac_data_averaged)
+
+```
+
+## 热图绘制
+
+```{r}
+# 样本顺序调整
+desired_order <- c("YM", "OM","YF", "OF")
+atac_data_averaged <- atac_data_averaged[, desired_order]
+# 设置分组
+group_list <- factor(c("YM", "OM", "YF", "OF"))
+
+dat <- log2(atac_data_averaged + 1)
+
+table(group_list)
+n <- t(scale(t(dat)))
+n <- na.omit(n)
+
+n[n > 1] = 1
+n[n < 0] = 0
+
+ac <- data.frame(Group = group_list)
+rownames(ac) <- colnames(n)
+ann_colors <- list(Group = c(YM = "#009bff", YF = "#FFA500", OM = "#5558c7", OF = "#FF4500"))
+
+
+coul <- colorRampPalette(brewer.pal(9, "OrRd"))(50)
+
+p2 <- pheatmap(
+  n,
+  scale = "none",
+  show_rownames = TRUE,
+  show_colnames = FALSE,
+  treeheight_row = 0,
+  cluster_row = TRUE,
+  cluster_col = FALSE,
+  annotation_col = ac,
+  annotation_colors = ann_colors,
+  gaps_col = c(4),
+  fontsize = 6, 
+  fontsize_row = 6, 
+  fontsize_col = 6, 
+  #fontfamily = "Arial"
+)
+p2
+```
+```{r}
+# 计算行和列的数量
+num_rows <- nrow(n)
+num_cols <- ncol(n)
+
+# 假设一个正方形的尺寸为单位长度，这里设定每个矩形的边长为1
+# 可根据实际需求调整这个尺寸
+unit_length <- 30
+
+# 根据行和列的数量设置图形的宽度和高度
+width <- num_cols * unit_length
+height <- num_rows * unit_length
+
+# 创建热图
+p2 <- pheatmap(
+  n,
+  scale = "none",
+  show_rownames = TRUE,
+  show_colnames = FALSE,
+  treeheight_row = 0,
+  cluster_row = TRUE,
+  cluster_col = FALSE,
+  annotation_col = ac,
+  annotation_colors = ann_colors,
+  gaps_col = c(4),
+  fontsize = 6, 
+  fontsize_row = 6, 
+  fontsize_col = 6, 
+  cellwidth = unit_length,   # 设置单元格宽度
+  cellheight = unit_length   # 设置单元格高度
+)
+```
+
+
+```{r}
+# 保存热图
+ggsave(filename = "heatmap_with_square_cells.pdf", plot = p2, width = 7, height = 8 )
+
+```
+
+
+```{r}
+getwd()
+```
+## 2.2 对于figure2O， 新增需求直接合并样本出图, 但是这个在数据的筛选上做出改变，不再只限制启动子。同时，绘制热图的时候进行左侧的注释，内容为distribution
+```{r}
+# 清理环境
+options(bitmapType = 'cairo')
+rm(list=ls())
+gc()
+
+library(pheatmap)
+library(dplyr)
+library(RColorBrewer)
+
+# 读取 原始的 ATAC-seq 注释文件
+#anno <- read.table("/hdd/hlf/result/atac_all/diffbind/mergebed/allwt_row_anno_gene.txt", header = TRUE, sep = "\t")
+anno <- read.csv("~/waibao_hezuo/Figure1/allwt_row_anno_gene.csv")
+
+
+# 读取 合并后 的 ATAC-seq 数据文件
+atac_data <- read_csv("~/waibao_hezuo/Figure1/atac_DESeq2_norm_count.csv")
+```
+
+
+```{r}
+# 筛选标记为 Promoter 的基因
+#promoter_genes <- anno %>% filter(grepl("Promoter", annotation))
+
+# 提取带有下划线的基因名
+promoter_genes <- anno %>% filter(grepl("_", GeneID))
+
+# 将要画的基因填入
+target_gene <- c("Gpr132", "Eps8", "Apbb1", "Hus1b", "Dlc1", "Il9r", "Serpine2", "Bcl2l11", "Bcl2l2", "Irf8", "Id3", "Stk3", "Bcl11a")
+# 筛选目标基因
+target_gene_patterns <- paste0(target_gene, "_")
+promoter_target_genes <- promoter_genes %>% filter(grepl(paste(target_gene_patterns, collapse = "|"), GeneID))
+# 根据筛选结果过滤 ATAC-seq 数据，并保留 GeneID 列
+atac_data_filtered <- atac_data %>% filter(GeneID %in% promoter_target_genes$GeneID)
+```
+
+
+```{r}
+# 将 `spec_tbl_df` 转换为常规的 `data.frame`
+atac_data_filtered <- as.data.frame(atac_data_filtered)
+
+# 设置行名
+rownames(atac_data_filtered) <- atac_data_filtered[["GeneID"]]
+
+atac_data_filtered <- subset(atac_data_filtered, select = -GeneID)
+
+```
+
+```{r}
+YM <- rowMeans(atac_data_filtered[, c("YM_REP1", "YM_REP2")])
+OM <- rowMeans(atac_data_filtered[, c("OM_REP1", "OM_REP2")])
+YF <- rowMeans(atac_data_filtered[, c("YF_REP1", "YF_REP2")])
+OF <- rowMeans(atac_data_filtered[, c("OF_REP1", "OF_REP2")])
+
+# 形成新的数据框
+atac_data_averaged <- data.frame(YM, OM, YF, OF)
+
+# 检查结果
+print(atac_data_averaged)
+
+```
+
+
+### 排序
+```{r}
+library(dplyr)
+
+get_annotation_order <- function(annotation) {
+  if (grepl("Promoter", annotation, ignore.case = TRUE)) {
+    return(1)
+  } else if (grepl("Intergenic", annotation, ignore.case = TRUE)) {
+    return(2)
+  } else if (grepl("intron", annotation, ignore.case = TRUE)) {
+    return(3)
+  } else if (grepl("exon", annotation, ignore.case = TRUE)) {
+    return(4)
+  } else if (grepl("5'UTR", annotation, ignore.case = TRUE)) {
+    return(5)
+  } else if (grepl("3'UTR", annotation, ignore.case = TRUE)) {
+    return(6)
+  } else {
+    return(7)
+  }
+}
+
+# 添加排序列并进行排序
+promoter_target_genes <- promoter_target_genes %>%
+  mutate(sort_order = sapply(annotation, get_annotation_order)) %>%
+  arrange(sort_order) %>%
+  dplyr::select(-sort_order)  # 排序后移除辅助列
+
+# 查看排序后的数据框
+print("Sorted promoter_target_genes using custom sort order:")
+print(promoter_target_genes)
+```
+```{r}
+desired_order <- c("YM", "OM","YF", "OF")
+atac_data_averaged <- atac_data_averaged[, desired_order]
+# 设置分组
+group_list <- factor(c("YM", "OM", "YF", "OF"))
+
+dat <- log2(atac_data_averaged + 1)
+
+table(group_list)
+n <- t(scale(t(dat)))
+n <- na.omit(n)
+
+n[n > 1] = 1
+n[n < 0] = 0
+
+ac <- data.frame(Group = group_list)
+rownames(ac) <- colnames(n)
+ann_colors <- list(Group = c(YM = "#009bff", YF = "#FFA500", OM = "#5558c7", OF = "#FF4500"))
+
+
+coul <- colorRampPalette(brewer.pal(9, "OrRd"))(50)
+```
+
+
+```{r}
+# 按照 promoter_target_genes 的行名顺序对 n 进行排序
+n <- n[promoter_target_genes$GeneID, , drop = FALSE]
+```
+
+
+```{r}
+# 新增注释信息
+annotation_row <- data.frame(Annotation = promoter_target_genes$annotation)
+rownames(annotation_row) <- promoter_target_genes$GeneID
+```
+
+
+```{r}
+# 计算行和列的数量
+num_rows <- nrow(n)
+num_cols <- ncol(n)
+
+# 可根据实际需求调整这个尺寸
+unit_length <- 30
+
+# 根据行和列的数量设置图形的宽度和高度
+width <- num_cols * unit_length
+height <- num_rows * unit_length
+
+
+# 创建热图
+p2 <- pheatmap(
+  n,
+  scale = "none",
+  show_rownames = TRUE,
+  show_colnames = FALSE,
+  treeheight_row = 0,
+  cluster_row = TRUE,
+  cluster_col = FALSE,
+  annotation_col = ac,
+  annotation_colors = ann_colors,
+  annotation_row = annotation_row,  # 新增行注释
+  gaps_col = c(4),
+  fontsize = 6,
+  fontsize_row = 6,
+  fontsize_col = 6,
+  cellwidth = unit_length,   # 设置单元格宽度
+  cellheight = unit_length   # 设置单元格高度
+)
+
+# 保存热图
+ggsave(filename = "~/waibao_hezuo/Figure1/heatmap_with_annotations.pdf", plot = p2$gtable, width = 6, height = 20)
+
+```
+
+```{r}
+# 提取括号前的注释形成新的一列
+promoter_target_genes <- promoter_target_genes %>%
+  mutate(main_annotation = gsub("\\(.*\\)", "", annotation))
+
+```
+
+```{r}
+# 新增注释信息
+annotation_row_2 <- data.frame(Annotation = promoter_target_genes$main_annotation)
+rownames(annotation_row_2) <- promoter_target_genes$GeneID
+```
+
+```{r}
+# 创建热图
+unit_length <- 30
+p2 <- pheatmap(
+  n,
+  scale = "none",
+  show_rownames = TRUE,
+  show_colnames = FALSE,
+  treeheight_row = 0,
+  cluster_row = FALSE,
+  cluster_col = FALSE,
+  annotation_col = ac,
+  annotation_colors = ann_colors,
+  annotation_row = annotation_row_2,  # 新增行注释
+  gaps_col = c(4),
+  fontsize = 6,
+  fontsize_row = 6,
+  fontsize_col = 6,
+  cellwidth = unit_length,   # 设置单元格宽度
+  cellheight = unit_length,   # 设置单元格高度
+  legend_breaks = c("Promoter", "Disintergenic", "Intron", "3'UTR"), # 设置图例顺序
+  legend_labels = c("Promoter", "Disintergenic", "Intron", "3'UTR")  # 设置图例标签
+)
+
+
+# 保存热图
+ggsave(filename = "~/waibao_hezuo/Figure1/heatmap_with_annotations.pdf", plot = p2$gtable, width = 6, height = 17)
+```
+

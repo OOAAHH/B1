@@ -45,7 +45,7 @@ deg <- deg[, c("log2FoldChange_DESeq2", "padj_DESeq2")]
 colnames(deg) <- c("log2FoldChange", "padj")
 
 # 设置 logFC 的阈值
-logFC_cutoff <- 2
+logFC_cutoff <- 1
 
 
 deg$group <- as.factor(ifelse(deg$padj <= 0.05 & abs(deg$log2FoldChange) > logFC_cutoff,
@@ -87,9 +87,9 @@ GO_results <- enrichGO(gene = ALL_deg$gene_name,
                        pvalueCutoff = 1,
                        maxGSSize = 50000,
                        minGSSize = 1,)
-View(GO_results)
+
 ALL_all <- as.data.frame(GO_results)
-View(ALL_all)
+
 write.csv(ALL_all,file="EnrichGO-DESeq2_gene_diff_GO_enrichment.csv")
 ```
 
@@ -121,14 +121,14 @@ write.csv(DOWN_all,file="EnrichGO-DESeq2_gene_DOWN_GO_enrichment.csv")
 ```
 
 
-这里出现问题，富集到通路与预期不符，先把之前的1.9 cutoff的数据重新绘图，all up 和down都绘图 barplot
 ## 对富集的结果进行绘制
 ```{r}
 getwd()
 
 ```
 
-```{r}
+```{r} 
+# 从本地读取富集结果
 # 加载必要的库
 suppressPackageStartupMessages(library(clusterProfiler))
 library(tidyverse)
@@ -153,14 +153,21 @@ down_data$group <- "DOWN"
 
 
 ```{r}
+# 使用新的富集结果
+# 添加分组信息
+ALL_all$group <- "diff"
+UP_all$group <- "UP"
+DOWN_all$group <- "DOWN"
 # 筛选出指定的上调和下调通路
 selected <- c(
 "phagocytosis",
 "positive regulation of phagocytosis",
 "regulation of leukocyte apoptotic process",
 "regulation of tumor necrosis factor production",
-"regulation of tumor necrosis factor superfamily cytokine production",
-"cellular response to reactive oxygen species leukocyte apoptotic process",
+"regulation of tumor necrosis factor superfamily",
+"cytokine production",
+"cellular response to reactive oxygen species", "
+leukocyte apoptotic process",
 "negative regulation of cell growth"
 )
 
@@ -172,9 +179,9 @@ selected <- c(
 #up_data <- up_data %>% filter(Description %in% selected_up)
 #down_data <- down_data %>% filter(Description %in% selected_down)
 
-diff_data <- diff_data %>% filter(Description %in% selected)
-up_data <- up_data %>% filter(Description %in% selected)
-down_data <- down_data %>% filter(Description %in% selected)
+diff_data <- ALL_all %>% filter(Description %in% selected)
+up_data <- UP_all %>% filter(Description %in% selected)
+down_data <- DOWN_all %>% filter(Description %in% selected)
 ```
 
 
@@ -191,22 +198,26 @@ down_data$pvalue <- -log10(down_data$pvalue)
 up_data$pvalue <- up_data$pvalue
 down_data$pvalue <- -down_data$pvalue
 
-# 合并数据
+# 上下调合并在一起，合并数据
 data <- rbind(up_data, down_data)
 
 # 去除描述因子的重复项
 data <- data %>% distinct(Description, .keep_all = TRUE)
 
 # 按p值排序
-data <- data[order(data$pvalue), ]
+up_data <- up_data[order(up_data$pvalue), ]
+down_data <- down_data[order(-down_data$pvalue), ]
+
 
 # 创建描述因子，并设置顺序
-data$Description <- factor(data$Description, levels = unique(data$Description))
+up_data $Description <- factor(up_data $Description, levels = unique(up_data$Description))
+
+down_data$Description <- factor(down_data$Description, levels = unique(down_data$Description))
 ```
 
 
 
-
+### up
 ```{r}
 # 自定义主题
 mytheme <- theme(
@@ -225,7 +236,7 @@ mytheme <- theme(
 )
 
 # 绘制条形图，调整条的宽度
-p <- ggplot(data = data, aes(x = Description, y = pvalue, fill = group)) +
+p <- ggplot(data = up_data, aes(x = Description, y = pvalue, fill = group)) +
   geom_col(width = 0.7) +  # 调整条的宽度
   coord_flip() +
   scale_fill_manual(values = c('UP' = '#8A2BE2')) +
@@ -249,9 +260,62 @@ p <- p + geom_text(aes(x = Description, y = 0, label = Description),
                         labels = c(0, 1, 2, 3, 4, 5, 6, 7))
 
 # 保存图像到文件，调整画布大小
-ggsave(filename = "Figure2o_cut1.9_GO_Term_Enrichment_Barplot_up.pdf", plot = p, width = 5.5, height = length(unique(data$Description)) * 0.45)  # 根据数据量调整高度
+ggsave(filename = "Figure2o_GO_Term_Enrichment_Barplot_up.pdf", plot = p, width = 6.7, height = length(unique(data$Description)) * 0.45)  # 根据数据量调整高度
 
 ```
+
+##down
+
+```{r}
+# 自定义主题
+mytheme <- theme(
+  axis.text.x = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  axis.ticks.y = element_blank(),
+  axis.text.y = element_text(size = 6, family = "Arial"),
+  axis.title.x = element_text(size = 6, family = "Arial"),
+  axis.title.y = element_text(size = 6, family = "Arial"),
+  axis.line = element_line(linewidth = 1),
+  plot.margin = unit(c(1, 1, 1, 1), "cm"), # up left down right
+  plot.title = element_text(hjust = 0.5, size = 6, family = "Arial"),
+  legend.title = element_text(size = 6, family = "Arial"),
+  legend.text = element_text(size = 6, family = "Arial"),
+  legend.position = "right",
+  legend.background = element_rect(fill = 'transparent')
+)
+
+# 绘制条形图，调整条的宽度
+p <- ggplot(data = down_data, aes(x = Description, y = pvalue, fill = group)) +
+  geom_col(width = 0.7) +  # 调整条的宽度
+  coord_flip() +
+  scale_fill_manual(values = c('DOWN' = '#009bff')) +
+  labs(x = NULL, y = bquote("-" ~ Log[10] ~ "(P value)"), title = "GO Term Enrichment") +
+  theme_bw() +
+  mytheme +
+  theme(
+    legend.position = "none",
+    axis.line.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank()
+  )
+
+# 添加注释，使其与 y 轴右对齐
+p <- p + geom_text(aes(x = Description, y = 0, label = Description),
+                   hjust = 1, color = 'black', size = 2, family = "Arial", nudge_y = -0.1) +
+     scale_x_discrete(labels = NULL) +
+     scale_y_continuous(expand = expansion(add = c(0.1, 0.1)),
+                        limits = c(-3, 0), breaks = seq(-3, 0, 1),
+                        labels = c(3, 2, 1, 0))
+
+
+# 保存图像到文件，调整画布大小
+ggsave(filename = "Figure2o_GO_Term_Enrichment_Barplot_down.pdf", plot = p, width = 5.5, height = length(unique(down_data$Description)) * 0.65)  # 根据数据量调整高度
+
+
+```
+
+
+
 
 # diff绘图
 ```{r}
@@ -307,11 +371,11 @@ p <- p + geom_text(aes(x = Description, y = 0, label = Description),
                    hjust = 0, color = 'black', size = 2, family = "Arial", nudge_y = 0.1) +
      scale_x_discrete(labels = NULL) +
      scale_y_continuous(expand = expansion(add = c(0.1, 0.1)),
-                        limits = c(0, 7), breaks = seq(0, 7, 1),
-                        labels = c(0, 1, 2, 3, 4, 5, 6, 7))
+                        limits = c(0, 5), breaks = seq(0, 5, 1),
+                        labels = c(0, 1, 2, 3, 4, 5))
 
 # 保存图像到文件，调整画布大小
-ggsave(filename = "Figure2o_cut1.9_GO_Term_Enrichment_Barplot_diff.pdf", plot = p, width = 5, height = length(unique(data$Description)) * 0.5)  # 根据数据量调整高度
+ggsave(filename = "Figure2o_GO_Term_Enrichment_Barplot_diff.pdf", plot = p, width = 5, height = length(unique(data$Description)) * 0.5)  # 根据数据量调整高度
 
 ```
 
